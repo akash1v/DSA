@@ -1,6 +1,7 @@
 //Both Side Insert Linked List Stack
 
-class Node{
+class Node
+{
     public:
     int key;
     Node* next{};
@@ -14,20 +15,22 @@ private:
 public:
     void enqueueFront(int);
     void enqueueEnd(int);
-    void dequeue();
+    int dequeue();
     int peek();
     bool isEmpty();
 };
 
-void BSILinkedListQueue::enqueueFront(int key){
-    Node* temp;
-    temp = new Node();
+void BSILinkedListQueue::enqueueFront(int key)
+{
+    Node* temp = new Node();
     temp->key = key;
-
-    if(listfront == nullptr){
+    if(listfront == nullptr)
+    {
         listfront = temp;
         listend = temp;
-    }else{
+    }
+    else
+    {
         temp->next->next = listfront;
         listfront = temp;
     }
@@ -35,12 +38,12 @@ void BSILinkedListQueue::enqueueFront(int key){
 
 }
 
-void BSILinkedListQueue::enqueueEnd(int key){
-    Node* temp;
-    temp = new Node();
+void BSILinkedListQueue::enqueueEnd(int key)
+{
+    Node* temp = new Node();
     temp->key = key;
-
-    if(listend == nullptr){
+    if(listend == nullptr)
+    {
         listfront = temp;
         listend = temp;
     }else{
@@ -50,27 +53,34 @@ void BSILinkedListQueue::enqueueEnd(int key){
     temp = nullptr;
 };
 
-void BSILinkedListQueue::dequeue(){
-    if(listend == nullptr){
+int BSILinkedListQueue::dequeue()
+{
+    if(listend == nullptr)
+    {
         return;
-    }else if(listend == listfront){
-        Node* temp;
-        temp = listend;
+    }
+    Node* temp = listfront;
+    if(listend == listfront)
+    {
         listend = nullptr;
         listfront = nullptr;
-        delete(temp);
-    }else{
-        Node* temp;
-        temp = listfront;
-
-        listfront = listfront->next;
-        delete(temp);        
     }
+    else
+    {
+        listfront = listfront->next;
+    }
+    int result = temp->key;
+    delete(temp);
+    return result;
 };
 
 int BSILinkedListQueue::peek(){    return listfront->key;    };
 
-bool BSILinkedListQueue::isEmpty(){
-    if(listend == nullptr){    return true; };
-        return false;
+bool BSILinkedListQueue::isEmpty()
+{
+    if(listend == nullptr)
+    {    
+        return true;
+    };
+    return false;
 };

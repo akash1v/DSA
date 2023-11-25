@@ -1,13 +1,15 @@
 #include<iostream>
 using namespace std;
 
-class HeightNode{
+class HeightNode
+{
 public:
     int left{};
     int right{};
 };
 
-class AVLTreeNode{
+class AVLTreeNode
+{
 public:
     int info{};
     AVLTreeNode* right{};
@@ -15,7 +17,8 @@ public:
     AVLTreeNode* parent{};
 };
 
-class AVLTree{
+class AVLTree
+{
 private :
 
     AVLTreeNode* node{};
@@ -47,12 +50,12 @@ private :
     void RRLeaf(AVLTreeNode*);
     void LLBranch(AVLTreeNode*);
     void RRBranch(AVLTreeNode*);
-    void UpdateBranches(AVLTreeNode*,AVLTreeNode*,AVLTreeNode*);
+    void UpdateBranch(AVLTreeNode*,AVLTreeNode*,AVLTreeNode*);
 
 public:
 
     void insert(int);
-    void remove(int);
+    bool remove(int);
     bool search(int);
     
     int height();
@@ -393,11 +396,16 @@ AVLTreeNode* AVLTree::successor(AVLTreeNode* ptr,int &a){
     }
 };
 
-void AVLTree::remove(int a)
+bool AVLTree::remove(int a)
 {
     AVLTreeNode* temp;
     temp = search(node,a);
-    if(temp){    remove(temp);    }
+    if(temp)
+    {    
+        remove(temp);
+        return true;
+    }
+    return false;
 }
 
 void AVLTree::remove(AVLTreeNode* ptr)
@@ -449,7 +457,7 @@ void AVLTree::AVLLeafCheck(AVLTreeNode* ptr){
     AVLBranchCheck(ptr->parent);
 };
 
-void AVLTree::UpdateBranches(AVLTreeNode* parent,AVLTreeNode* old_child,AVLTreeNode* new_child)
+void AVLTree::UpdateBranch(AVLTreeNode* parent,AVLTreeNode* old_child,AVLTreeNode* new_child)
 {
     if(!parent)
     {
@@ -469,7 +477,7 @@ void AVLTree::UpdateBranches(AVLTreeNode* parent,AVLTreeNode* old_child,AVLTreeN
 void AVLTree::LLLeaf(AVLTreeNode* ptr)
 {
     AVLTreeNode* temp = ptr->left;
-    UpdateBranches(ptr->parent,ptr,temp);
+    UpdateBranch(ptr->parent,ptr,temp);
     temp->right = ptr;
     temp->right->parent = temp;
     ptr->left = nullptr;
@@ -479,7 +487,7 @@ void AVLTree::LLLeaf(AVLTreeNode* ptr)
 void AVLTree::RRLeaf(AVLTreeNode* ptr)
 {
     AVLTreeNode* temp = ptr->right;
-    UpdateBranches(ptr->parent,ptr,temp);
+    UpdateBranch(ptr->parent,ptr,temp);
     temp->left = ptr;
     temp->left->parent = temp;
     ptr->right = nullptr;
@@ -489,7 +497,7 @@ void AVLTree::RRLeaf(AVLTreeNode* ptr)
 void AVLTree::LRLeaf(AVLTreeNode* ptr)
 {
     AVLTreeNode* temp = ptr->left->right;
-    UpdateBranches(ptr->parent,ptr,temp);
+    UpdateBranch(ptr->parent,ptr,temp);
     temp->right = ptr;
     temp->right->parent = temp;
     temp->left = ptr->left;
@@ -502,7 +510,7 @@ void AVLTree::LRLeaf(AVLTreeNode* ptr)
 void AVLTree::RLLeaf(AVLTreeNode* ptr)
 {
     AVLTreeNode* temp = ptr->right->left;
-    UpdateBranches(ptr->parent,ptr,temp);
+    UpdateBranch(ptr->parent,ptr,temp);
     temp->left = ptr;
     temp->left->parent = temp;
     temp->right = ptr->right;
@@ -537,7 +545,7 @@ void AVLTree::AVLBranchCheck(AVLTreeNode* ptr)
 void AVLTree::LLBranch(AVLTreeNode* ptr)
 {
     AVLTreeNode* temp = ptr->left;
-    UpdateBranches(ptr->parent,ptr,temp);
+    UpdateBranch(ptr->parent,ptr,temp);
     ptr->left = temp->right;
     ptr->left->parent = ptr;
     temp->right = ptr;
@@ -548,7 +556,7 @@ void AVLTree::LLBranch(AVLTreeNode* ptr)
 void AVLTree::RRBranch(AVLTreeNode* ptr)
 {
     AVLTreeNode* temp = ptr->right;
-    UpdateBranches(ptr->parent,ptr,temp);
+    UpdateBranch(ptr->parent,ptr,temp);
     ptr->right = temp->left;
     ptr->right->parent = ptr;
     temp->left = ptr;

@@ -1,6 +1,7 @@
 //Both Side Insert Linked List Stack
 
-class Node{
+class Node
+{
     public:
     int key;
     Node* next{};
@@ -14,7 +15,7 @@ private:
 public:
     void pushFront(int);
     void pushEnd(int);
-    void pop();
+    int pop();
     int peek();
     bool isEmpty();
 };
@@ -24,60 +25,71 @@ void BSILinkedListStack::pushFront(int key){
     temp = new Node();
     temp->key = key;
 
-    if(listend == nullptr){
+    if(listend == nullptr)
+    {
         listfront = temp;
         listend = temp;
-    }else{
+    }
+    else
+    {
         temp->next = listfront;
         listfront = temp;
     }
     temp = nullptr;    
 }
 
-void BSILinkedListStack::pushEnd(int key){
+void BSILinkedListStack::pushEnd(int key)
+{
     Node* temp;
     temp = new Node();
     temp->key = key;
 
-    if(listend == nullptr){
+    if(listend == nullptr)
+    {
         listfront = temp;
         listend = temp;
-    }else{
+    }
+    else
+    {
         listend->next = temp;
         listend = temp;
     }
     temp = nullptr;
 };
 
-void BSILinkedListStack::pop(){
-    if(listend == nullptr){
-        return;
-    }else if(listend == listfront){
-        Node* temp;
-        temp = listend;
+int BSILinkedListStack::pop(){
+    if(listend == nullptr)
+    {
+        return 0;
+    }
+    Node* temp = listfront;
+    if(listend == listfront)
+    {
         listend = nullptr;
         listfront = nullptr;
-        delete(temp);
-    }else{
-        Node* temp;
-        temp = listfront;
+    }
+    else
+    {
         while (temp->next!=listend)
         {
             temp = temp->next;
         };
-
-        Node* temp_2;
-        temp_2 = listend;
         listend = temp;
-        delete(temp_2);
-        temp = nullptr;
-        
+        temp = temp->next;
+        listend->next = nullptr;
     }
+    int result = temp->key;
+    delete(temp);
+    return temp->key;
 };
 
 int BSILinkedListStack::peek(){    return listend->key;    };
 
-bool BSILinkedListStack::isEmpty(){
-    if(listend == nullptr){    return true; };
+bool BSILinkedListStack::isEmpty()
+{
+    if(listend == nullptr)
+    {
+        return true;
+    };
         return false;
 };
