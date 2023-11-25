@@ -15,15 +15,20 @@ class AVLTree{
     AVLTreeNode* node{};
 
     void insert(AVLTreeNode*,AVLTreeNode*);
+    void remove(AVLTreeNode*);
     AVLTreeNode* search(AVLTreeNode*,int &);
     int height(AVLTreeNode*);
-    void print(AVLTreeNode* ,bool &);
+
+    void printInOrder(AVLTreeNode* ,bool &);
+    void printPreOrder(AVLTreeNode*);
+    void printPostOrder(AVLTreeNode*);
     void printPath(AVLTreeNode* ,int*,int &);
+
+
     AVLTreeNode* predecessor(AVLTreeNode*,int &);
     AVLTreeNode* successor(AVLTreeNode*,int &);
     AVLTreeNode* minimum(AVLTreeNode*);
     AVLTreeNode* maximum(AVLTreeNode*);
-    void remove(AVLTreeNode*);
 
     void AVLLeafCheck(AVLTreeNode*);
     void LLLeaf(AVLTreeNode*);
@@ -39,16 +44,19 @@ class AVLTree{
 
 
     void insert(int);
+    void remove(int);
     bool search(int);
     int height();
-    void printAsc();
-    void printDsc();
+
+    void printInOrder(bool);
+    void printPreOrder();
+    void printPostOrder();
     void printPath();
+    
     int minimum();
     int maximum();
     int predecessor(int);
     int successor(int);
-    void remove(int);
 };
 
 
@@ -129,31 +137,53 @@ int AVLTree::height(AVLTreeNode* ptr){
     }
 }
 
-void AVLTree::printAsc(){
-    bool ascending = true;
+void AVLTree::printInOrder(bool ascending = true){
     print(node,ascending);
 }
 
-void AVLTree::printDsc(){
-    bool ascending = false;
-    print(node,ascending);
-}
-
-void AVLTree::print(AVLTreeNode* ptr , bool &Asc){
+void AVLTree::printInOrder(AVLTreeNode* ptr , bool &Asc){
     if(!ptr){
         return;
     }
-    else if(Asc == true){
-        print(ptr->left,Asc);
+    else if(Asc){
+        printInOrder(ptr->left,Asc);
         cout<<ptr->info<<endl;
-        print(ptr->right,Asc);
+        printInOrder(ptr->right,Asc);
     }
     else{
-        print(ptr->right,Asc);
+        printInOrder(ptr->right,Asc);
         cout<<ptr->info<<endl;
-        print(ptr->left,Asc);
+        printInOrder(ptr->left,Asc);
     }
 }
+
+void AVLTree::printPreOrder(){
+    printPreOrder(node);
+}
+
+void AVLTree::printPreOrder(AVLTreeNode* ptr){
+    if(!ptr){
+        return;
+    }
+    cout<<ptr->info<<endl;
+    printPreOrder(ptr->left,Asc);
+    printPreOrder(ptr->right,Asc);
+}
+
+
+void AVLTree::printPostOrder(){
+    printPostOrder(node);
+}
+
+void AVLTree::printPostOrder(AVLTreeNode* ptr){
+    if(!ptr){
+        return;
+    }
+    cout<<ptr->info<<endl;
+    printPostOrder(ptr->left,Asc);
+    printPostOrder(ptr->right,Asc);
+}
+
 
 void AVLTree::printPath(){
     if(!node){  return;     }
@@ -221,10 +251,17 @@ AVLTreeNode* AVLTree::maximum(AVLTreeNode* ptr){
 
 
 int AVLTree::predecessor(int a){
-    AVLTreeNode* ptr{};
-    ptr = predecessor(node,a);
-    if(ptr){    return ptr->info;    }
-    return 0;
+    AVLTreeNode* temp = search(node, a);
+    if(temp==nullptr){    
+        temp = predecessor(node, a);
+        if(temp!=nullptr){    return temp->info;    }
+        return 0;
+    }else{
+        temp = predecessor(temp, a);
+        if(temp!=nullptr){    return temp->data;    }
+        if(temp->parent->info < temp->info){    return temp->parent->info;  };
+        return 0;
+    }
 }
 
 AVLTreeNode* AVLTree::predecessor(AVLTreeNode* ptr,int &a){
@@ -246,10 +283,17 @@ AVLTreeNode* AVLTree::predecessor(AVLTreeNode* ptr,int &a){
 };
 
 int AVLTree::successor(int a){
-    AVLTreeNode* ptr{};
-    ptr = successor(node,a);
-    if(ptr){    return ptr->info;     }
-    return 0;
+    AVLTreeNode* temp = search(node, a);
+    if(temp==nullptr){    
+        temp = predecessor(node, a);
+        if(temp!=nullptr){    return temp->info;    }
+        return 0;
+    }else{
+        temp = predecessor(temp, a);
+        if(temp!=nullptr){    return temp->data;    }
+        if(temp->parent->info < temp->info){    return temp->parent->info;  };
+        return 0;
+    }
 }
 
 AVLTreeNode* AVLTree::successor(AVLTreeNode* ptr,int &a){
