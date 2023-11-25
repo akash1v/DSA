@@ -1,4 +1,3 @@
-//Double Headed Circular Linked List
 #include<iostream>
 
 class DHCLinkedListNode{
