@@ -19,7 +19,8 @@ class AVLTree{
     AVLTreeNode* search(AVLTreeNode*,int &);
     int height(AVLTreeNode*);
 
-    void printInOrder(AVLTreeNode* ,bool &);
+    void printInOrder(AVLTreeNode*);
+    void printReverseOrder(AVLTreeNode*);
     void printPreOrder(AVLTreeNode*);
     void printPostOrder(AVLTreeNode*);
     void printPath(AVLTreeNode* ,int*,int &);
@@ -48,7 +49,8 @@ class AVLTree{
     bool search(int);
     int height();
 
-    void printInOrder(bool);
+    void printInOrder();
+    void printReverseOrder();
     void printPreOrder();
     void printPostOrder();
     void printPath();
@@ -137,24 +139,30 @@ int AVLTree::height(AVLTreeNode* ptr){
     }
 }
 
-void AVLTree::printInOrder(bool ascending = true){
-    print(node,ascending);
+void AVLTree::printInOrder(){
+    printInOrder(node);
 }
 
-void AVLTree::printInOrder(AVLTreeNode* ptr , bool &Asc){
+void AVLTree::printInOrder(AVLTreeNode* ptr){
     if(!ptr){
         return;
-    }
-    else if(Asc){
-        printInOrder(ptr->left,Asc);
-        cout<<ptr->info<<endl;
-        printInOrder(ptr->right,Asc);
-    }
-    else{
-        printInOrder(ptr->right,Asc);
-        cout<<ptr->info<<endl;
-        printInOrder(ptr->left,Asc);
-    }
+    }
+    printInOrder(ptr->left);
+    cout<<ptr->info<<endl;
+    printInOrder(ptr->right);
+}
+
+void AVLTree::printReverseOrder(){
+    printInOrder(node);
+}
+
+void AVLTree::printReverseOrder(AVLTreeNode* ptr){
+    if(!ptr){
+        return;
+    }
+    printReverseOrder(ptr->right);
+    cout<<ptr->info<<endl;
+    printReverseOrder(ptr->left);
 }
 
 void AVLTree::printPreOrder(){
@@ -166,8 +174,8 @@ void AVLTree::printPreOrder(AVLTreeNode* ptr){
         return;
     }
     cout<<ptr->info<<endl;
-    printPreOrder(ptr->left,Asc);
-    printPreOrder(ptr->right,Asc);
+    printPreOrder(ptr->left);
+    printPreOrder(ptr->right);
 }
 
 
@@ -180,8 +188,8 @@ void AVLTree::printPostOrder(AVLTreeNode* ptr){
         return;
     }
     cout<<ptr->info<<endl;
-    printPostOrder(ptr->left,Asc);
-    printPostOrder(ptr->right,Asc);
+    printPostOrder(ptr->left);
+    printPostOrder(ptr->right);
 }
 
 
@@ -258,7 +266,7 @@ int AVLTree::predecessor(int a){
         return 0;
     }else{
         temp = predecessor(temp, a);
-        if(temp!=nullptr){    return temp->data;    }
+        if(temp!=nullptr){    return temp->info;    }
         if(temp->parent->info < temp->info){    return temp->parent->info;  };
         return 0;
     }
@@ -290,7 +298,7 @@ int AVLTree::successor(int a){
         return 0;
     }else{
         temp = predecessor(temp, a);
-        if(temp!=nullptr){    return temp->data;    }
+        if(temp!=nullptr){    return temp->info;    }
         if(temp->parent->info < temp->info){    return temp->parent->info;  };
         return 0;
     }
