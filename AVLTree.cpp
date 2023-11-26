@@ -262,13 +262,13 @@ AVLTreeNode* AVLTree::maximum(AVLTreeNode* ptr){
 
 int AVLTree::predecessor(int a){
     AVLTreeNode* temp = search(node, a);
-    if(temp==nullptr){    
-        temp = predecessor(node, a);
+    if(!temp){
+        return 0;
     }
-    else{
-        temp = predecessor(temp, a);
+    AVLTreeNode* temp2 = predecessor(temp, a);
+    if(temp2){
+        return temp->info;    
     }
-    if(temp!=nullptr){    return temp->info;    }
     if(temp->parent && temp->parent->info < temp->info){
         return temp->parent->info;  
     };
@@ -298,18 +298,17 @@ AVLTreeNode* AVLTree::predecessor(AVLTreeNode* ptr,int &a){
 
 int AVLTree::successor(int a){
     AVLTreeNode* temp = search(node, a);
-    if(temp==nullptr){    
-        temp = predecessor(node, a);
+    if(!temp){    
+        return 0;
     }
-    else{
-        temp = predecessor(temp, a);
+    AVLTreeNode* temp2 = successor(temp, a);
+    if(temp2){
+        return temp2->info;
     }
-    if(temp!=nullptr){    return temp->info;    }
     if(temp->parent && temp->parent->info < temp->info){
         return temp->parent->info;  
     };
     return 0;
-    
 }
 
 AVLTreeNode* AVLTree::successor(AVLTreeNode* ptr,int &a){
