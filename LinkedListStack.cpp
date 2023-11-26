@@ -1,12 +1,10 @@
-class Node
-{
+class Node{
     public:
     int key;
     Node* next{};
 };
 
-class LinkedListStack
-{
+class LinkedListStack{
 private:
     Node* listfront{};
     Node* listend{};
@@ -17,40 +15,32 @@ public:
     bool isEmpty();
 };
 
-void LinkedListStack::push(int key)
-{
+void LinkedListStack::push(int key){
     Node* temp = new Node();
     temp->key = key;
 
-    if(listend == nullptr)
-    {
+    if(listend == nullptr){
         listfront = temp;
         listend = temp;
     }
-    else
-    {
+    else{
         listend->next = temp;
         listend = temp;
     }
     temp = nullptr;
 };
 
-int LinkedListStack::pop()
-{
-    if(listend == nullptr)
-    {
+int LinkedListStack::pop(){
+    if(listend == nullptr){
         return 0;
     }
     Node* temp = listfront;
-    if(listend == listfront)
-    {
+    if(listend == listfront){
         listend = nullptr;
         listfront = nullptr;
     }
-    else
-    {
-        while (temp->next!=listend)
-        {
+    else{
+        while (temp->next!=listend){
             temp = temp->next;
         };
         listend = temp;
@@ -64,8 +54,7 @@ int LinkedListStack::pop()
 
 int LinkedListStack::peek(){    return listend->key;    };
 
-bool LinkedListStack::isEmpty()
-{
+bool LinkedListStack::isEmpty(){
     if(listend == nullptr){    return true; };
     return false;
 };

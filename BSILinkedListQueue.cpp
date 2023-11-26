@@ -1,14 +1,12 @@
 //Both Side Insert Linked List Stack
 
-class Node
-{
+class Node{
     public:
     int key;
     Node* next{};
 };
 
-class BSILinkedListQueue
-{
+class BSILinkedListQueue{
 private:
     Node* listfront{};
     Node* listend{};
@@ -20,17 +18,14 @@ public:
     bool isEmpty();
 };
 
-void BSILinkedListQueue::enqueueFront(int key)
-{
+void BSILinkedListQueue::enqueueFront(int key){
     Node* temp = new Node();
     temp->key = key;
-    if(listfront == nullptr)
-    {
+    if(listfront == nullptr){
         listfront = temp;
         listend = temp;
     }
-    else
-    {
+    else{
         temp->next->next = listfront;
         listfront = temp;
     }
@@ -38,12 +33,10 @@ void BSILinkedListQueue::enqueueFront(int key)
 
 }
 
-void BSILinkedListQueue::enqueueEnd(int key)
-{
+void BSILinkedListQueue::enqueueEnd(int key){
     Node* temp = new Node();
     temp->key = key;
-    if(listend == nullptr)
-    {
+    if(listend == nullptr){
         listfront = temp;
         listend = temp;
     }else{
@@ -53,20 +46,16 @@ void BSILinkedListQueue::enqueueEnd(int key)
     temp = nullptr;
 };
 
-int BSILinkedListQueue::dequeue()
-{
-    if(listend == nullptr)
-    {
+int BSILinkedListQueue::dequeue(){
+    if(listend == nullptr){
         return;
     }
     Node* temp = listfront;
-    if(listend == listfront)
-    {
+    if(listend == listfront){
         listend = nullptr;
         listfront = nullptr;
     }
-    else
-    {
+    else{
         listfront = listfront->next;
     }
     int result = temp->key;
@@ -76,10 +65,8 @@ int BSILinkedListQueue::dequeue()
 
 int BSILinkedListQueue::peek(){    return listfront->key;    };
 
-bool BSILinkedListQueue::isEmpty()
-{
-    if(listend == nullptr)
-    {    
+bool BSILinkedListQueue::isEmpty(){
+    if(listend == nullptr){    
         return true;
     };
     return false;

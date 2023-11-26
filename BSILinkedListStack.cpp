@@ -1,14 +1,12 @@
 //Both Side Insert Linked List Stack
 
-class Node
-{
+class Node{
     public:
     int key;
     Node* next{};
 };
 
-class BSILinkedListStack
-{
+class BSILinkedListStack{
 private:
     Node* listfront{};
     Node* listend{};
@@ -25,32 +23,27 @@ void BSILinkedListStack::pushFront(int key){
     temp = new Node();
     temp->key = key;
 
-    if(listend == nullptr)
-    {
+    if(listend == nullptr){
         listfront = temp;
         listend = temp;
     }
-    else
-    {
+    else{
         temp->next = listfront;
         listfront = temp;
     }
     temp = nullptr;    
 }
 
-void BSILinkedListStack::pushEnd(int key)
-{
+void BSILinkedListStack::pushEnd(int key){
     Node* temp;
     temp = new Node();
     temp->key = key;
 
-    if(listend == nullptr)
-    {
+    if(listend == nullptr){
         listfront = temp;
         listend = temp;
     }
-    else
-    {
+    else{
         listend->next = temp;
         listend = temp;
     }
@@ -58,20 +51,16 @@ void BSILinkedListStack::pushEnd(int key)
 };
 
 int BSILinkedListStack::pop(){
-    if(listend == nullptr)
-    {
+    if(listend == nullptr){
         return 0;
     }
     Node* temp = listfront;
-    if(listend == listfront)
-    {
+    if(listend == listfront){
         listend = nullptr;
         listfront = nullptr;
     }
-    else
-    {
-        while (temp->next!=listend)
-        {
+    else{
+        while (temp->next!=listend){
             temp = temp->next;
         };
         listend = temp;
@@ -85,10 +74,8 @@ int BSILinkedListStack::pop(){
 
 int BSILinkedListStack::peek(){    return listend->key;    };
 
-bool BSILinkedListStack::isEmpty()
-{
-    if(listend == nullptr)
-    {
+bool BSILinkedListStack::isEmpty(){
+    if(listend == nullptr){
         return true;
     };
         return false;

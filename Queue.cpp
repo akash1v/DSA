@@ -1,8 +1,7 @@
 #include<iostream>
 using namespace std;
 
-class Queue
-{
+class Queue{
 private:
 
 int size = 10;
@@ -31,23 +30,18 @@ Queue::Queue(int a){
     queue_array = new int[size];
 }
 
-void Queue::enqueue(int key)
-{
-    if(no_of_values!=size)
-    {
+void Queue::enqueue(int key){
+    if(no_of_values!=size){
         queue_array[no_of_values] = key;
         no_of_values++;
     }
 
 }
 
-int Queue::dequeue()
-{
-    if(no_of_values!=0)
-    {   
+int Queue::dequeue(){
+    if(no_of_values!=0){   
         int value = queue_array[0];
-        for(int i=0;i<no_of_values;i++)
-        {
+        for(int i=0;i<no_of_values;i++){
             queue_array[i]=queue_array[i+1];
         }
         no_of_values--;
@@ -55,20 +49,16 @@ int Queue::dequeue()
     }
 }
 
-int Queue::peek()
-{   
-    if(no_of_values!=0)
-    {
+int Queue::peek(){   
+    if(no_of_values!=0){
         return queue_array[0];
     }
 }
 
-bool Queue::isEmpty()
-{
+bool Queue::isEmpty(){
     return !no_of_values;
 }
 
-Queue::~Queue()
-{
+Queue::~Queue(){
     delete[] queue_array;
 }

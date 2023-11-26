@@ -1,12 +1,10 @@
-class Node
-{
+class Node{
     public:
     int key;
     Node* next{};
 };
 
-class LinkedListQueue
-{
+class LinkedListQueue{
 private:
     Node* listfront{};
     Node* listend{};
@@ -17,13 +15,11 @@ public:
     bool isEmpty();
 };
 
-void LinkedListQueue::enqueue(int key)
-{
+void LinkedListQueue::enqueue(int key){
     Node* temp;
     temp = new Node();
     temp->key = key;
-    if(listend == nullptr)
-    {
+    if(listend == nullptr){
         listfront = temp;
         listend = temp;
     }else{
@@ -33,20 +29,16 @@ void LinkedListQueue::enqueue(int key)
     temp = nullptr;
 };
 
-int LinkedListQueue::dequeue()
-{
-    if(listend == nullptr)
-    {
+int LinkedListQueue::dequeue(){
+    if(listend == nullptr){
         return;
     }
     Node* temp = listfront;
-    if(listend == listfront)
-    {
+    if(listend == listfront){
         listend = nullptr;
         listfront = nullptr;
     }
-    else
-    {
+    else{
         listfront = listfront->next;
     }
     int result = temp->key;

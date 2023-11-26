@@ -1,16 +1,14 @@
 //Double Headed Linked List
 #include<iostream>
 
-class DHLinkedListNode
-{
+class DHLinkedListNode{
     public:
     int info{};
     DHLinkedListNode* next{};
     DHLinkedListNode* prev{};
 };
 
-class DHLinkedList
-{
+class DHLinkedList{
 private:
     DHLinkedListNode* ll_front{};
     DHLinkedListNode* ll_back{};
@@ -24,36 +22,30 @@ public:
     void print();
 };
 
-void DHLinkedList::insert(int key,int at = -1)
-{
+void DHLinkedList::insert(int key,int at = -1){
     DHLinkedListNode* new_node = new DHLinkedListNode();
     new_node->info = key;
-    if(!ll_back)
-    {
+    if(!ll_back){
         ll_front = new_node;
         ll_back = new_node;
         new_node = nullptr;
         no_of_values++;
         return;
     }
-    if(at  == 0)
-    {
+    if(at  == 0){
         ll_front->prev = new_node;
         new_node->next = ll_front;
         ll_front = new_node;
     }
-    else if(at == -1 || at == no_of_values)
-    {
+    else if(at == -1 || at == no_of_values){
         new_node->prev = ll_back;
         ll_back->next = new_node;
         ll_back = new_node;
     }
-    else
-    {
+    else{
         DHLinkedListNode* temp;
         temp = ll_front;
-        for(int i=0;i<at;i++)
-        {
+        for(int i=0;i<at;i++){
             temp = temp->next;
         }
         temp->prev->next = new_node;
@@ -66,31 +58,25 @@ void DHLinkedList::insert(int key,int at = -1)
     return;
 }
 
-int DHLinkedList::remove(int at=-1)
-{    
+int DHLinkedList::remove(int at=-1){    
     if(!ll_back){    return;    }
     DHLinkedListNode* temp = ll_front;
-    if(ll_front == ll_back)
-    {
+    if(ll_front == ll_back){
         ll_back = nullptr;
         ll_front = nullptr;
     }
-    if(at == 0)
-    {
+    if(at == 0){
         ll_front = ll_front->next;
         ll_front->prev = nullptr;
     }
-    else if(at == -1 || at == length()-1)
-    {
+    else if(at == -1 || at == length()-1){
         temp = ll_back;
         ll_back = ll_back->prev;
         ll_back->next = nullptr;
     }
-    else
-    {
+    else{
         temp = ll_front;
-        for(int i=0;i<at;i++)
-        {
+        for(int i=0;i<at;i++){
             temp = temp->next;
         }
         temp->prev->next = temp->next;
@@ -102,27 +88,22 @@ int DHLinkedList::remove(int at=-1)
     return result;
 }
 
-int DHLinkedList::at(int at)
-{   
+int DHLinkedList::at(int at){   
     DHLinkedListNode* temp;
     temp = ll_front;
-    for(int i=0;i<at;i++)
-    {
+    for(int i=0;i<at;i++){
         temp = temp->next;
     }
     return temp->info;
 }
 
-int DHLinkedList::length()
-{
+int DHLinkedList::length(){
     return no_of_values;
 }
 
-void DHLinkedList::print()
-{
+void DHLinkedList::print(){
     DHLinkedListNode* temp = ll_front;
-    for(int i=0; i < no_of_values;i++)
-    {
+    for(int i=0; i < no_of_values;i++){
         std::cout<<temp->info<<"  ";
         temp = temp->next;
     }
