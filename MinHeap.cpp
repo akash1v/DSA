@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+
 class MinHeap{
 private:
     int* array;
@@ -7,6 +8,7 @@ private:
     int no_of_values{};
 
     void makeSpaceMinHeap();
+
 public:
     MinHeap(){};
     MinHeap(int);
@@ -36,14 +38,14 @@ void MinHeap::makeSpaceMinHeap(){
     }
 }
 
-void MinHeap::insert(int key){
+void MinHeap::insert(int data){
     makeSpaceMinHeap();
     if(no_of_values == 0){
-        array[no_of_values] = key;
+        array[no_of_values] = data;
         no_of_values++;
     }
     else{
-        array[no_of_values] = key;
+        array[no_of_values] = data;
         no_of_values++;
         int index = no_of_values-1;
         int parent = 0;
@@ -65,9 +67,7 @@ void MinHeap::insert(int key){
             if(index%2 == 0){ parent = (index - 2)/2;}
             else{ parent = (index - 1)/2;};
         }
-
     }
-
 }
 
 int MinHeap::remove(){

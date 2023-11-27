@@ -1,16 +1,16 @@
 //circular linked list
 #include<iostream>
 
-class CLinkedListNode{
+class Node{
     public:
     int info{};
-    CLinkedListNode* next{};
+    Node* next{};
 };
 
-class CLinkedList{
+class LinkedList{
     private:
-    CLinkedListNode* ll_front{};
-    CLinkedListNode* ll_back{};
+    Node* listfront{};
+    Node* listend{};
 
     public:
     void insert(int, int);
@@ -21,32 +21,32 @@ class CLinkedList{
 
 };
 
-void CLinkedList::insert(int key, int at = -1){
-    CLinkedListNode* new_node = new CLinkedListNode();
-    new_node->info = key;
+void LinkedList::insert(int data, int at = -1){
+    Node* new_node = new Node();
+    new_node->info = data;
 
-    if(!ll_back){
-        ll_front = new_node;
-        ll_back = new_node;
-        ll_back->next = ll_front;
+    if(!listend){
+        listfront = new_node;
+        listend = new_node;
+        listend->next = listfront;
         new_node = nullptr;
         return;
     }
 
     if(at == 0){
-        new_node->next = ll_front;
-        ll_front = new_node;
-        ll_back->next = ll_front;
+        new_node->next = listfront;
+        listfront = new_node;
+        listend->next = listfront;
     }
     else if(at == length() || at == -1){
-        ll_back->next = new_node;
-        ll_back = new_node;
-        ll_back->next = ll_front;
+        listend->next = new_node;
+        listend = new_node;
+        listend->next = listfront;
     }
     else{
         for(int i=0;i<at;i++){
-            CLinkedListNode* temp;
-            temp = ll_front;
+            Node* temp;
+            temp = listfront;
             for(int i=1;i<at;i++){
                 temp = temp->next;
             }
@@ -62,73 +62,73 @@ void CLinkedList::insert(int key, int at = -1){
     
 }
 
-int CLinkedList::remove(int at = -1){
+int LinkedList::remove(int at = -1){
 
-    if(!ll_back){    return;    }
+    if(!listend){    return;    }
     
-    CLinkedListNode* temp = ll_front;
+    Node* temp = listfront;
 
-    if(ll_front == ll_back){
-        ll_front = nullptr;
-        ll_back = nullptr;
+    if(listfront == listend){
+        listfront = nullptr;
+        listend = nullptr;
     }
     else if(at == 0){
-        ll_front = ll_front->next;
-        ll_back->next = ll_front;
+        listfront = listfront->next;
+        listend->next = listfront;
     }
     else if(at == -1  || at == length()-1){
-        while(temp->next!=ll_back){
+        while(temp->next!=listend){
             temp = temp->next;
         }
-        ll_back = temp;
+        listend = temp;
         temp = temp->next;
-        ll_back->next = ll_front;
+        listend->next = listfront;
     }
     else{    
-        CLinkedListNode* temp_2;
+        Node* temp2;
         for(int i=0;i<at;i++){
-            temp_2 = temp;
+            temp2 = temp;
             temp = temp->next;
         }
 
-        temp_2->next = temp->next;
-        temp_2 = nullptr;
-        delete(temp_2);
+        temp2->next = temp->next;
+        temp2 = nullptr;
+        delete(temp2);
     }
 
     delete(temp);
 
 }
 
-int CLinkedList::at(int at){
-    if(!ll_back){    return 0;   }
-    CLinkedListNode* temp = ll_front;
+int LinkedList::at(int at){
+    if(!listend){    return 0;   }
+    Node* temp = listfront;
     for(int i=0;i<at;i++){
         temp = temp->next;
     }
     return temp->info;
 }
 
-int CLinkedList::length(){
+int LinkedList::length(){
     int count{};
-    if(ll_front){
-        CLinkedListNode* temp{};
-        temp = ll_front;
+    if(listfront){
+        Node* temp{};
+        temp = listfront;
         do{
             count++;
             temp = temp->next;
-        }while(temp != ll_front);
+        }while(temp != listfront);
         return count;
     }
     return 0;
 }
 
-void CLinkedList::print(){
-    if(ll_front){
-        CLinkedListNode* temp = ll_front;
+void LinkedList::print(){
+    if(listfront){
+        Node* temp = listfront;
         do{
             std::cout<<temp->info<<std::endl;
             temp = temp->next;
-        }while(temp != ll_front);
+        }while(temp != listfront);
     }
 }

@@ -2,11 +2,11 @@
 
 class Node{
     public:
-    int key;
+    int info;
     Node* next{};
 };
 
-class BSILinkedListQueue{
+class Queue{
 private:
     Node* listfront{};
     Node* listend{};
@@ -18,9 +18,9 @@ public:
     bool isEmpty();
 };
 
-void BSILinkedListQueue::enqueueFront(int key){
+void Queue::enqueueFront(int data){
     Node* temp = new Node();
-    temp->key = key;
+    temp->info = data;
     if(listfront == nullptr){
         listfront = temp;
         listend = temp;
@@ -33,9 +33,9 @@ void BSILinkedListQueue::enqueueFront(int key){
 
 }
 
-void BSILinkedListQueue::enqueueEnd(int key){
+void Queue::enqueueEnd(int data){
     Node* temp = new Node();
-    temp->key = key;
+    temp->info = data;
     if(listend == nullptr){
         listfront = temp;
         listend = temp;
@@ -46,7 +46,7 @@ void BSILinkedListQueue::enqueueEnd(int key){
     temp = nullptr;
 };
 
-int BSILinkedListQueue::dequeue(){
+int Queue::dequeue(){
     if(listend == nullptr){
         return;
     }
@@ -58,14 +58,14 @@ int BSILinkedListQueue::dequeue(){
     else{
         listfront = listfront->next;
     }
-    int result = temp->key;
+    int result = temp->info;
     delete(temp);
     return result;
 };
 
-int BSILinkedListQueue::peek(){    return listfront->key;    };
+int Queue::peek(){    return listfront->info;    };
 
-bool BSILinkedListQueue::isEmpty(){
+bool Queue::isEmpty(){
     if(listend == nullptr){    
         return true;
     };

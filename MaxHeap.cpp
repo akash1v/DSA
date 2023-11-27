@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+
 class MaxHeap{
 private:
     int* array;
@@ -7,6 +8,7 @@ private:
     int no_of_values{};
 
     void makeSpaceMaxHeap();
+
 public:
     MaxHeap(){};
     MaxHeap(int);
@@ -36,14 +38,14 @@ void MaxHeap::makeSpaceMaxHeap(){
     }
 }
 
-void MaxHeap::insert(int key){
+void MaxHeap::insert(int data){
     makeSpaceMaxHeap();
     if(no_of_values == 0){
-        array[no_of_values] = key;
+        array[no_of_values] = data;
         no_of_values++;
     }
     else{
-        array[no_of_values] = key;
+        array[no_of_values] = data;
         no_of_values++;
         int index = no_of_values-1;
         int parent = 0;

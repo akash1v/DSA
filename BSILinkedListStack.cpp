@@ -2,11 +2,11 @@
 
 class Node{
     public:
-    int key;
+    int info;
     Node* next{};
 };
 
-class BSILinkedListStack{
+class Stack{
 private:
     Node* listfront{};
     Node* listend{};
@@ -18,10 +18,10 @@ public:
     bool isEmpty();
 };
 
-void BSILinkedListStack::pushFront(int key){
+void Stack::pushFront(int data){
     Node* temp;
     temp = new Node();
-    temp->key = key;
+    temp->info = data;
 
     if(listend == nullptr){
         listfront = temp;
@@ -34,10 +34,10 @@ void BSILinkedListStack::pushFront(int key){
     temp = nullptr;    
 }
 
-void BSILinkedListStack::pushEnd(int key){
+void Stack::pushEnd(int data){
     Node* temp;
     temp = new Node();
-    temp->key = key;
+    temp->info = data;
 
     if(listend == nullptr){
         listfront = temp;
@@ -50,7 +50,7 @@ void BSILinkedListStack::pushEnd(int key){
     temp = nullptr;
 };
 
-int BSILinkedListStack::pop(){
+int Stack::pop(){
     if(listend == nullptr){
         return 0;
     }
@@ -67,14 +67,14 @@ int BSILinkedListStack::pop(){
         temp = temp->next;
         listend->next = nullptr;
     }
-    int result = temp->key;
+    int result = temp->info;
     delete(temp);
-    return temp->key;
+    return temp->info;
 };
 
-int BSILinkedListStack::peek(){    return listend->key;    };
+int Stack::peek(){    return listend->info;    };
 
-bool BSILinkedListStack::isEmpty(){
+bool Stack::isEmpty(){
     if(listend == nullptr){
         return true;
     };

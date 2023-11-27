@@ -1,17 +1,17 @@
 //Double Headed Linked List
 #include<iostream>
 
-class DHLinkedListNode{
+class Node{
     public:
     int info{};
-    DHLinkedListNode* next{};
-    DHLinkedListNode* prev{};
+    Node* next{};
+    Node* prev{};
 };
 
-class DHLinkedList{
+class LinkedList{
 private:
-    DHLinkedListNode* ll_front{};
-    DHLinkedListNode* ll_back{};
+    Node* listfront{};
+    Node* listend{};
     int no_of_values;
 
 public:
@@ -22,29 +22,29 @@ public:
     void print();
 };
 
-void DHLinkedList::insert(int key,int at = -1){
-    DHLinkedListNode* new_node = new DHLinkedListNode();
-    new_node->info = key;
-    if(!ll_back){
-        ll_front = new_node;
-        ll_back = new_node;
+void LinkedList::insert(int data,int at = -1){
+    Node* new_node = new Node();
+    new_node->info = data;
+    if(!listend){
+        listfront = new_node;
+        listend = new_node;
         new_node = nullptr;
         no_of_values++;
         return;
     }
     if(at  == 0){
-        ll_front->prev = new_node;
-        new_node->next = ll_front;
-        ll_front = new_node;
+        listfront->prev = new_node;
+        new_node->next = listfront;
+        listfront = new_node;
     }
     else if(at == -1 || at == no_of_values){
-        new_node->prev = ll_back;
-        ll_back->next = new_node;
-        ll_back = new_node;
+        new_node->prev = listend;
+        listend->next = new_node;
+        listend = new_node;
     }
     else{
-        DHLinkedListNode* temp;
-        temp = ll_front;
+        Node* temp;
+        temp = listfront;
         for(int i=0;i<at;i++){
             temp = temp->next;
         }
@@ -58,24 +58,24 @@ void DHLinkedList::insert(int key,int at = -1){
     return;
 }
 
-int DHLinkedList::remove(int at=-1){    
-    if(!ll_back){    return;    }
-    DHLinkedListNode* temp = ll_front;
-    if(ll_front == ll_back){
-        ll_back = nullptr;
-        ll_front = nullptr;
+int LinkedList::remove(int at=-1){    
+    if(!listend){    return;    }
+    Node* temp = listfront;
+    if(listfront == listend){
+        listend = nullptr;
+        listfront = nullptr;
     }
     if(at == 0){
-        ll_front = ll_front->next;
-        ll_front->prev = nullptr;
+        listfront = listfront->next;
+        listfront->prev = nullptr;
     }
     else if(at == -1 || at == length()-1){
-        temp = ll_back;
-        ll_back = ll_back->prev;
-        ll_back->next = nullptr;
+        temp = listend;
+        listend = listend->prev;
+        listend->next = nullptr;
     }
     else{
-        temp = ll_front;
+        temp = listfront;
         for(int i=0;i<at;i++){
             temp = temp->next;
         }
@@ -88,21 +88,21 @@ int DHLinkedList::remove(int at=-1){
     return result;
 }
 
-int DHLinkedList::at(int at){   
-    DHLinkedListNode* temp;
-    temp = ll_front;
+int LinkedList::at(int at){   
+    Node* temp;
+    temp = listfront;
     for(int i=0;i<at;i++){
         temp = temp->next;
     }
     return temp->info;
 }
 
-int DHLinkedList::length(){
+int LinkedList::length(){
     return no_of_values;
 }
 
-void DHLinkedList::print(){
-    DHLinkedListNode* temp = ll_front;
+void LinkedList::print(){
+    Node* temp = listfront;
     for(int i=0; i < no_of_values;i++){
         std::cout<<temp->info<<"  ";
         temp = temp->next;

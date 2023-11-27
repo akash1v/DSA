@@ -1,38 +1,38 @@
 #include<iostream>
 using namespace std;
-class BTreeNode{
-public:
-    int* data_array{};
-    int no_of_values{};
-    BTreeNode* parent{};
-    BTreeNode** node_array{};
 
-    BTreeNode(int a){
-        data_array = new int [a]{};
-        node_array = new BTreeNode*[a+1]{};
+class Node{
+public:
+    int* info_array{};
+    int no_of_values{};
+    Node* parent{};
+    Node** node_array{};
+
+    Node(int a){
+        info_array = new int [a]{};
+        node_array = new Node*[a+1]{};
     };
 };
 
-class KeyNNode{
+class DataNode{
 public:
     int key{};
-    BTreeNode* right{};
+    Node* right{};
 };
 
-class BTree
-{
+class BTree{
 private:
-    BTreeNode* node;
+    Node* root_node;
     int size{};
 
-    BTreeNode* makeParent(BTreeNode*,int &,BTreeNode*);
-    int getLocation(BTreeNode*, int &);
-    bool spaceAvailable(BTreeNode*);
-    void makeSpace(BTreeNode*, int&, bool);
-    void override(BTreeNode*, int &, BTreeNode*);
-    KeyNNode* breakNode(BTreeNode*, bool);
+    Node* makeParent(Node*,int &,Node*);
+    int getLocation(Node*, int &);
+    bool spaceAvailable(Node*);
+    void makeSpace(Node*, int&, bool);
+    void override(Node*, int &, Node*);
+    DataNode* breakNode(Node*, bool);
     
-    void print(BTreeNode*);
+    void print(Node*);
     
 public:
     BTree();
@@ -44,62 +44,62 @@ public:
 
 BTree::BTree(){
     size = 100;
-    node = new BTreeNode(size);
+    root_node = new Node(size);
 }
 
 BTree::BTree(int a){
     if(a < 2){  BTree(); }
     size = a;
-    node = new BTreeNode(size);
+    root_node = new Node(size);
 }
 
-void BTree::insert(int val){
-    BTreeNode* temp = node;
+void BTree::insert(int data){
+    Node* temp = root_node;
 
     while(true){
-        int i = getLocation(temp,val);
+        int i = getLocation(temp,data);
         if(temp->node_array[i] == nullptr){   break;  };
         temp = temp->node_array[i];
     }
 
-    override(temp, val, nullptr);
+    override(temp, data, nullptr);
     if(spaceAvailable(temp)){
         temp->no_of_values++;
         return;
     }
 
-    KeyNNode* knn = breakNode(temp, false);
+    DataNode* dn = breakNode(temp, false);
 
     while (true){
-        BTreeNode* parent = temp->parent;
+        Node* parent = temp->parent;
         if(parent == nullptr){
-            node = makeParent(temp, knn->key, knn->right);
-            node->no_of_values++;
+            root_node = makeParent(temp, dn->key, dn->right);
+            root_node->no_of_values++;
             return;
         }
         temp = parent;
-        override(temp, knn->key, knn->right);
+        override(temp, dn->key, dn->right);
         if(spaceAvailable(temp)){
             temp->no_of_values++;
             return;
         }
-        knn = breakNode(temp,true);
+        dn = breakNode(temp,true);
     }
 }
 
-bool BTree::search(int val){
-    BTreeNode* temp = node;
+bool BTree::search(int data){
+    Node* temp = root_node;
     while(true){
-        int i = getLocation(temp,val);
-        if(val == temp->data_array[i]){    return true;    }
+        int i = getLocation(temp,data);
+        if(data == temp->info_array[i]){    return true;    }
         if(temp->node_array[i] == nullptr){   return false;  };
         temp = temp->node_array[i];
     }    
 }
 
-BTreeNode* BTree::makeParent(BTreeNode* left,int &val,BTreeNode* right){
-    BTreeNode* parent = new BTreeNode(size);
-    parent->data_array[0] = val;
+Node* BTree::makeParent(Node* left,int &data,Node* right){
+    Node* parent = new Node(size);
+    parent->info_array[0] = data;
     parent->node_array[0] = left;
     parent->node_array[1] = right;
     left->parent = parent;
@@ -107,50 +107,50 @@ BTreeNode* BTree::makeParent(BTreeNode* left,int &val,BTreeNode* right){
     return parent;
 };
 
-bool BTree::spaceAvailable(BTreeNode* ptr){
+bool BTree::spaceAvailable(Node* ptr){
     if(ptr->no_of_values<size-1){
         return true;
     }
     return false;
 }
 
-int BTree::getLocation(BTreeNode* ptr, int& val){
+int BTree::getLocation(Node* ptr, int& data){
     int i=0;
-    for(i;  i != ptr->no_of_values  && val > ptr->data_array[i]; i++);
+    for(i;  i != ptr->no_of_values  && data > ptr->info_array[i]; i++);
     return i;
 }
 
-void BTree::makeSpace(BTreeNode* ptr, int& i,bool branch_node){
+void BTree::makeSpace(Node* ptr, int& i,bool branch_node){
     for(int j = ptr->no_of_values ; j>i ;j--){
-        ptr->data_array[j] = ptr->data_array[j-1];
+        ptr->info_array[j] = ptr->info_array[j-1];
         if(branch_node){
             ptr->node_array[j+1] = ptr->node_array[j];
         }
     }
 }
 
-void BTree::override(BTreeNode* ptr, int& val, BTreeNode* right){
-    int i= getLocation(ptr, val);
+void BTree::override(Node* ptr, int& data, Node* right){
+    int i= getLocation(ptr, data);
     makeSpace(ptr, i, right);
-    ptr->data_array[i] = val;
+    ptr->info_array[i] = data;
     if(right){
         ptr->node_array[i+1] = right;
         right->parent = ptr;
     }
 }
 
-KeyNNode* BTree::breakNode(BTreeNode* left,bool branch_node = false){
+DataNode* BTree::breakNode(Node* left,bool branch_node = false){
 
-    KeyNNode* n = new KeyNNode();
-    n->key = left->data_array[size/2];
-    n->right = new BTreeNode(size);
+    DataNode* n = new DataNode();
+    n->key = left->info_array[size/2];
+    n->right = new Node(size);
     n->right->parent = left->parent;
 
     int i = (size/2)+1;
     int s=0;
 
     for(i, s=0; i < size; i++, s++ ){
-        n->right->data_array[s] = left->data_array[i];
+        n->right->info_array[s] = left->info_array[i];
         n->right->no_of_values++;
         if(branch_node){
             n->right->node_array[s] = left->node_array[i];
@@ -166,15 +166,15 @@ KeyNNode* BTree::breakNode(BTreeNode* left,bool branch_node = false){
 }
 
 void BTree::print(){
-    print(node);
+    print(root_node);
 }
 
-void BTree::print(BTreeNode* ptr){
+void BTree::print(Node* ptr){
     if(ptr == nullptr){    return;    }
     int i=0;
     for(i;i<ptr->no_of_values;i++){
         print(ptr->node_array[i]);
-        cout<<ptr->data_array[i]<<"   ";
+        cout<<ptr->info_array[i]<<"   ";
     }
     print(ptr->node_array[i]);
 }

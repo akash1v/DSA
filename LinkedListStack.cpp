@@ -1,10 +1,11 @@
 class Node{
     public:
-    int key;
+    int info{};
     Node* next{};
+    Node* prev{};
 };
 
-class LinkedListStack{
+class Stack{
 private:
     Node* listfront{};
     Node* listend{};
@@ -12,49 +13,57 @@ public:
     void push(int);
     int pop();
     int peek();
+    int len();
     bool isEmpty();
 };
 
-void LinkedListStack::push(int key){
-    Node* temp = new Node();
-    temp->key = key;
-
-    if(listend == nullptr){
-        listfront = temp;
-        listend = temp;
+void Stack::push(int data){
+    Node* new_node = new Node();
+    new_node->info = data;
+    if(!listend){
+        listfront = new_node;
+        listend = new_node;
+        new_node = nullptr;
+        return;
     }
-    else{
-        listend->next = temp;
-        listend = temp;
-    }
-    temp = nullptr;
+    new_node->prev = listend;
+    listend->next = new_node;
+    listend = new_node;
+    new_node = nullptr;
 };
 
-int LinkedListStack::pop(){
-    if(listend == nullptr){
-        return 0;
-    }
-    Node* temp = listfront;
-    if(listend == listfront){
+int Stack::pop(){
+    if(!listend){    return;    }
+    if(listfront == listend){
         listend = nullptr;
         listfront = nullptr;
     }
-    else{
-        while (temp->next!=listend){
-            temp = temp->next;
-        };
-        listend = temp;
-        temp->next = temp;
-        listend->next = nullptr;   
-    }
-    int result = temp->key;
+    Node* temp = listend;
+    listend = listend->prev;
+    listend->next = nullptr;
+    int result = temp->info;
     delete(temp);
     return result;
 };
 
-int LinkedListStack::peek(){    return listend->key;    };
+int Stack::peek(){
+    return listend->info;
+};
 
-bool LinkedListStack::isEmpty(){
+int Stack::len(){
+    if(isEmpty()){
+        return 0;
+    }
+    int count = 0;
+    Node* temp = listfront;
+    while (temp){
+        count++;
+        temp = temp->next;
+    }
+    
+}
+
+bool Stack::isEmpty(){
     if(listend == nullptr){    return true; };
     return false;
 };
