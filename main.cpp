@@ -1,16 +1,13 @@
 #include<iostream>
 #include<math.h>
-#include"BTree.cpp"
+#include"PriorityLinkedList.cpp"
 using namespace std;
 int main(){
-    BTree alpha(2);
+    LinkedList alpha;
     for (int i = 1; i < 100; i++){
-        alpha.insert(i);
+        alpha.push(i);
     }
-    for (int i = 0; i < 1000; i++)
-    {
-        cout<<alpha.search(i);
-    }
+    alpha.print();
     
     return 0;
 }

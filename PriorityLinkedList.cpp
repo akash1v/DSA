@@ -121,7 +121,7 @@ void LinkedList::push(int data, int index=-1){
 }
 
 int LinkedList::remove(int index){    
-    if(!listend){    return;    }
+    if(!listend){    return 0;    }
     Node* temp = listfront;
     if(listfront == listend){
         listend = nullptr;
@@ -168,7 +168,7 @@ int LinkedList::len(){
 void LinkedList::print(){
     Node* temp = listfront;
     for(int i=0; i < no_of_values;i++){
-        std::cout<<temp->priority<<"  ";
+        std::cout<<temp->info<<"  ";
         temp = temp->next;
     }
 }
