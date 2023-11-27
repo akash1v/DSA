@@ -49,6 +49,7 @@ private :
     void RRBranch(AVLTreeNode*);
     void UpdateBranch(AVLTreeNode*,AVLTreeNode*,AVLTreeNode*);
 
+    void destruct(AVLTreeNode*);
 public:
 
     void insert(int);
@@ -67,6 +68,8 @@ public:
     int maximum();
     int predecessor(int);
     int successor(int);
+    
+    ~AVLTree();
 };
 
 
@@ -476,3 +479,14 @@ void AVLTree::RRBranch(AVLTreeNode* ptr){
     ptr->left->parent = temp;
     ptr=nullptr;
 };
+
+void AVLTree::destruct(AVLTreeNode* ptr){
+    if(!ptr){   return;    }
+    destruct(ptr->left);
+    destruct(ptr->right);
+    delete(ptr);
+}
+
+AVLTree::~AVLTree(){
+    destruct(node);
+}

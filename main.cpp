@@ -1,13 +1,16 @@
 #include<iostream>
-#include"AVLTree.cpp"
-
+#include<math.h>
+#include"BTree.cpp"
+using namespace std;
 int main(){
-    AVLTree alpha;
-    for (int i = 1; i < ; i++)
-    {
+    BTree alpha(2);
+    for (int i = 1; i < 100; i++){
         alpha.insert(i);
     }
-    cout<<alpha.predecessor(3)<<endl;
-    cout<<alpha.height()<<endl;
-    return 0;    
+    for (int i = 0; i < 1000; i++)
+    {
+        cout<<alpha.search(i);
+    }
+    
+    return 0;
 }
