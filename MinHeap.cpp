@@ -52,13 +52,14 @@ void MinHeap::insert(int data){
 }
 
 int MinHeap::remove(){
-        if(no_of_values > 0){
+    if(no_of_values > 0){
         int result = array[0];
         array[0] = array[no_of_values-1];
         no_of_values--;
         siftdown(array, no_of_values);
         return result;
     }
+    return 0;
 }
 
 void MinHeap::print(){

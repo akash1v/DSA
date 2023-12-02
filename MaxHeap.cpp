@@ -60,6 +60,7 @@ int MaxHeap::remove(){
         siftdown(array, no_of_values);
         return result;
     }
+    return 0;
 }
 
 void MaxHeap::print(){
