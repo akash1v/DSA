@@ -47,41 +47,55 @@ void MaxHeap::insert(int data){
     else{
         array[no_of_values] = data;
         no_of_values++;
-        int index = no_of_values-1;
-        int parent = 0;
-        if(index%2 == 0){
-            parent = (index - 2)/2;
-        }
-        else{
-            parent = (index - 1)/2;
-        };
-
-        while(array[index]>array[parent]){
-            int temp = array[index];
-            array[index] = array[parent];
-            array[parent] = temp;
-            
-            if(parent == 0){ break;}
-            index = parent;
-            
-            if(index%2 == 0){ parent = (index - 2)/2;}
-            else{ parent = (index - 1)/2;};
-        }
-
+        siftup(array,no_of_values);
     }
 
 }
 
 int MaxHeap::remove(){
-    int result = array[0];
-    array[0] = array[no_of_values-1];
-    no_of_values--;
+    if(no_of_values>0){
+        int result = array[0];
+        array[0] = array[no_of_values-1];
+        no_of_values--;
+        siftdown(array, no_of_values);
+        return result;
+    }
+}
+
+void MaxHeap::print(){
+    for(int i=0;i<no_of_values;i++){
+        cout<<(array[i])<<" ";
+    }
+    printf("\n");
+}
+
+MaxHeap::~MaxHeap(){
+    delete[] array;
+}
+
+void siftup(int* array, int size){
+    int index = size-1;
+    int parent = (index-1)/2;
+
+    while(array[index]>array[parent]){
+        int temp = array[index];
+        array[index] = array[parent];
+        array[parent] = temp;
+            
+        if(parent == 0){ break;}
+        index = parent;
+        parent = (index-1)/2;
+    }
+
+}
+
+void siftdown(int* array, int size){
     int index = 0;
     int left = index*2 + 1;
     int right = index*2 + 2;
-    while (left<no_of_values){
+    while (left<size){
         if(array[index]<array[left] && array[index]<array[right]){
-            if(array[right]<array[left]){
+            if(array[right]>array[left]){
                 int temp = array[right];
                 array[right] = array[index];
                 array[index] = temp;
@@ -112,16 +126,4 @@ int MaxHeap::remove(){
         left = index*2 + 1;
         right = index*2 + 2;
     }
-    return result;
-}
-
-void MaxHeap::print(){
-    for(int i=0;i<no_of_values;i++){
-        cout<<(array[i])<<" ";
-    }
-    printf("\n");
-}
-
-MaxHeap::~MaxHeap(){
-    delete[] array;
 }
