@@ -18,8 +18,11 @@ public:
     void insert(int, int);
     int remove(int);
     int at(int);
+    bool search(int);
     int length();
     void print();
+
+    ~LinkedList();
 };
 
 void LinkedList::insert(int data,int at = -1){
@@ -59,13 +62,13 @@ void LinkedList::insert(int data,int at = -1){
 }
 
 int LinkedList::remove(int at=-1){    
-    if(!listend){    return;    }
+    if(!listend){    return 0;    }
     Node* temp = listfront;
     if(listfront == listend){
         listend = nullptr;
         listfront = nullptr;
     }
-    if(at == 0){
+    else if(at == 0){
         listfront = listfront->next;
         listfront->prev = nullptr;
     }
@@ -97,6 +100,17 @@ int LinkedList::at(int at){
     return temp->info;
 }
 
+bool LinkedList::search(int a){
+    Node* temp = listfront;
+    for (int i = 0; i < no_of_values; i++){
+        if(temp->info == a){
+            return 1;
+        }
+        temp = temp->next;
+    }
+    return 0;
+}
+
 int LinkedList::length(){
     return no_of_values;
 }
@@ -107,4 +121,12 @@ void LinkedList::print(){
         std::cout<<temp->info<<"  ";
         temp = temp->next;
     }
+}
+
+LinkedList::~LinkedList(){
+    int temp = no_of_values;   
+    for (int i = 0; i < no_of_values; i++){
+        remove();
+    }
+    
 }
