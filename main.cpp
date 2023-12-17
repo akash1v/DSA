@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 int main(){
-    bool alpha{};
     cout<<"Hello"<<endl;
+    system("PAUSE");
     return 0;
 }
