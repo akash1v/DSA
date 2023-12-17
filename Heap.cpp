@@ -1,21 +1,22 @@
 #include<iostream>
+
 using namespace std;
 
 class MinHeap{
-private:
-    int* array;
-    int size{};
+
+protected:
+    int* array{};
+    int size;
     int no_of_values{};
-    bool min{};
     
-    void makeSpaceMinHeap();
-    void siftupMin(int*, int);
-    void siftupMax(int*, int);
-    void siftdownMin(int*, int);
-    void siftdownMax(int*, int);
+    void makeSpaceHeap();
+    
+    void siftup(int*, int);
+    void siftdown(int*, int);
 
 public:
-    MinHeap(){};
+
+    MinHeap();
     MinHeap(int);
     void insert(int);
     int remove();
@@ -23,12 +24,16 @@ public:
     ~MinHeap();
 };
 
+MinHeap::MinHeap(){
+    size = 0;
+}
+
 MinHeap::MinHeap(int a){
     array = new int[a];
     size = a;
 }
 
-void MinHeap::makeSpaceMinHeap(){
+void MinHeap::makeSpaceHeap(){
     if(no_of_values == size){
         size++;
         int* new_array = new int[size];
@@ -44,7 +49,7 @@ void MinHeap::makeSpaceMinHeap(){
 }
 
 void MinHeap::insert(int data){
-    makeSpaceMinHeap();
+    makeSpaceHeap();
     if(no_of_values == 0){
         array[no_of_values] = data;
         no_of_values++;
@@ -52,7 +57,7 @@ void MinHeap::insert(int data){
     else{
         array[no_of_values] = data;
         no_of_values++;
-        siftupMin(array, no_of_values);
+        siftup(array, no_of_values);
     }
 }
 
@@ -61,7 +66,7 @@ int MinHeap::remove(){
         int result = array[0];
         array[0] = array[no_of_values-1];
         no_of_values--;
-        siftdownMin(array, no_of_values);
+        siftdown(array, no_of_values);
         return result;
     }
     return 0;
@@ -74,11 +79,7 @@ void MinHeap::print(){
     printf("\n");
 }
 
-MinHeap::~MinHeap(){
-    delete[] array;
-}
-
-void MinHeap::siftdownMin(int* array,int size){
+void MinHeap::siftdown(int* array,int size){
     int index = 0;
     int left = index*2 + 1;
     int right = index*2 + 2;
@@ -118,7 +119,7 @@ void MinHeap::siftdownMin(int* array,int size){
     }
 }
 
-void MinHeap::siftupMin(int* array, int size){
+void MinHeap::siftup(int* array, int size){
     int index = size-1;
     int parent = (index-1)/2;
 
@@ -133,86 +134,36 @@ void MinHeap::siftupMin(int* array, int size){
     }
 }
 
+MinHeap::~MinHeap(){
+    delete[] array;
+}
 
-#include<iostream>
-using namespace std;
+class MaxHeap:public MinHeap{
 
-class MaxHeap{
-private:
-    int* array;
-    int size{};
-    int no_of_values{};
-
-    void makeSpaceMaxHeap();
+protected:
     void siftup(int*, int);
     void siftdown(int*, int);
 
 public:
-    MaxHeap(){};
+    MaxHeap();
     MaxHeap(int);
-    void insert(int);
-    int remove();
-    void print();
     ~MaxHeap();
 };
+
+MaxHeap::MaxHeap(){
+    size = 0;
+}
 
 MaxHeap::MaxHeap(int a){
     array = new int[a];
     size = a;
 }
 
-void MaxHeap::makeSpaceMaxHeap(){
-    if(no_of_values == size){
-        size++;
-        int* new_array = new int[size];
-        for(int i=0; i<size-1; i++){
-            new_array[i] = array[i];
-        }
-        if(array){
-            delete[] array;
-        }
-        array = new_array;
-        new_array = nullptr;
-    }
-}
-
-void MaxHeap::insert(int data){
-    makeSpaceMaxHeap();
-    if(no_of_values == 0){
-        array[no_of_values] = data;
-        no_of_values++;
-    }
-    else{
-        array[no_of_values] = data;
-        no_of_values++;
-        siftup(array,no_of_values);
-    }
-
-}
-
-int MaxHeap::remove(){
-    if(no_of_values>0){
-        int result = array[0];
-        array[0] = array[no_of_values-1];
-        no_of_values--;
-        siftdown(array, no_of_values);
-        return result;
-    }
-    return 0;
-}
-
-void MaxHeap::print(){
-    for(int i=0;i<no_of_values;i++){
-        cout<<(array[i])<<" ";
-    }
-    printf("\n");
-}
-
 MaxHeap::~MaxHeap(){
     delete[] array;
 }
 
-void MinHeap::siftupMax(int* array, int size){
+void MaxHeap::siftup(int* array, int size){
     int index = size-1;
     int parent = (index-1)/2;
 
@@ -228,7 +179,7 @@ void MinHeap::siftupMax(int* array, int size){
 
 }
 
-void MinHeap::siftdownMax(int* array, int size){
+void MaxHeap::siftdown(int* array, int size){
     int index = 0;
     int left = index*2 + 1;
     int right = index*2 + 2;
