@@ -11,8 +11,8 @@ protected:
     
     void makeSpaceHeap();
     
-    void siftup(int*, int);
-    void siftdown(int*, int);
+    virtual void siftup(int*, int);
+    virtual void siftdown(int*, int);
 
 public:
 

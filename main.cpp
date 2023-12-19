@@ -3,7 +3,7 @@
 using namespace std;
 int main(){
 
-    MaxHeap* alpha = new MaxHeap(10);
+    MinHeap* alpha = new MinHeap(10);
     alpha->insert(132);
     alpha->insert(543);
     alpha->insert(122);
