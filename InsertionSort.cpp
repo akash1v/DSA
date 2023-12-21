@@ -1,10 +1,9 @@
-void insertionSort(int * array_a, int array_size){
-    for (int i = 0; i < array_size; i++){
-        for (int j = i; j>0; j--){
-            if (array_a[j]<array_a[j-1]){
-                int key = array_a[j];
-                array_a[j] = array_a[j-1];
-                array_a[j-1] = key;
+#include"Swap.cpp"
+void insertionSort(int * array, int size){
+    for (int i = 1; i < size; i++){
+        for (int j = i; j > 0; j--){
+            if (array[j] < array[j-1]){
+                swap(array, j, j-1);
             }
             else{
                 break;

@@ -1,28 +1,22 @@
-void quickSort(int * array_a, int array_size){
-    if(array_size < 2){    return;    };
-    int nosoev = 0;                           //no of smaller or equal values
-    int pivot = array_a[array_size-1];
-    
-    for (int i = 0; i < array_size; i++){                                                                   
-        if(array_a[i]<=pivot){                            
-            if(i==nosoev){
-                nosoev++;
-            }else{
-                int key = array_a[nosoev];
-                array_a[nosoev]  =  array_a[i];
-                array_a[i]  = key;
-                nosoev++;
-            }
+#include"Swap.cpp"
+void quickSort(int* array, int l, int h){
+
+    if(h - l < 1){    return;    }
+
+    int m = l;
+
+    for(int i = l; i <= h; i++){
+        if(array[i] < array[h]){
+            swap(array, m, i);
+            m++;
         }
     }
+    swap(array, m, h);
 
+    quickSort(array, l, m-1);
+    quickSort(array, m+1, h);
+}
 
-    quickSort(array_a,nosoev);
-    
-
-
-    int *p;
-    p = &array_a[nosoev];
-    quickSort(p,array_size-nosoev-1);
-    
+void quickSort(int* array, int size){
+    quickSort(array, 0, size - 1);
 }

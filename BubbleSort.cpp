@@ -1,11 +1,9 @@
-void bubbleSort(int * array_a, int array_size){
-    for (int i = array_size-1; i > 0; i--)
-    {
-        for(int j=0;j<i;j++){
-            if(array_a[j]>array_a[j+1]){
-                int key = array_a[j+1];
-                array_a[j+1]=array_a[j];
-                array_a[j]=key;
+#include"Swap.cpp"
+void bubbleSort(int * array, int size){
+    for (int i = 1; i < size ; i++){
+        for(int j = 0; j < size - i; j++){
+            if(array[j] > array[j+1]){
+                swap(array, j, j+1);
             }
         }
     }  

@@ -1,15 +1,12 @@
-void selectionSort(int* array_a,int array_size){
-    for (int i = 0; i < array_size; i++)
-    {
+#include"Swap.cpp"
+void selectionSort(int* array,int size){
+    for (int i = 0; i < size - 1; i++){
         int k = i;
-        for (int j = i; j<array_size; j++)
-        {
-            if(array_a[j]<array_a[k]){
+        for (int j = i + 1; j < size; j++){
+            if(array[j] < array[k]){
                 k = j;
             }
         }
-        int key = array_a[i];
-        array_a[i] = array_a[k];
-        array_a[k] = key;   
+        swap(array, k, i);
     }
 }

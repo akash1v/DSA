@@ -1,71 +1,38 @@
-void mergeSort(int* array_a,int array_size){
+#include"MergeSortedArray.cpp"
+#include"Swap.cpp"
+void mergeSort(int* array,int size){
 
-    if(array_size==1){ return; }
-    else if (array_size==2){
-        if(array_a[0]<=array_a[1]){
-            return;
-        }
-        else{
-            int key = array_a[0];
-            array_a[0]=array_a[1];
-            array_a[1]=key;
-            return;
-        }
+    if(size==1){ return; }
+    
+    if (size==2){
+        if(array[0]<=array[1]){    return;    }
+        
+        swap(array,0,1);
+        return;
     }
 
-    int a,b;
+    int e_size = size / 2;
+    int f_size = size - e_size;
 
-    if(array_size%2==0){
-        a=array_size/2;
-        b=array_size/2;
-    }
-    else{
-        a=array_size/2 + 1;
-        b=array_size/2;
-    }
+    int f_half[f_size];
+    int e_half[e_size];
 
-    int first_half[a]{};
-    int last_half[b]{};
-
-    for (int i = 0; i < a; i++){
-        first_half[i] = array_a[i];
+    int i = 0;
+    for (int i; i < f_size; i++){
+        f_half[i] = array[i];
     };
 
-    for(int i=array_size; i > a; i--){
-        last_half[i-1-a] = array_a[i-1];
+    for(int i; i < size; i++){
+        e_half[i-f_size] = array[i];
     }
 
-    mergeSort(first_half,a);
-    mergeSort(last_half,b);        
+    mergeSort(f_half,f_size);
+    mergeSort(e_half,e_size);        
 
-    int m=0;
-    int n=0;
+    delete[] array;
+    array = mergeSortedArray(f_half,f_size,e_half,e_size);    
 
-    while(m<a){
-        if(n==b){    break;    }
-        while (n<b){
-            if(first_half[m]<=last_half[n]){
-                array_a[m+n]=first_half[m];
-                m++;
-                break;
-            }
-            else{
-                array_a[m+n]=last_half[n];
-                n++;
-            }
-        }
-        m++;
-    }
-
-    while (m<a){
-        array_a[m+n] = first_half[m];
-        m++;
-    }
-        
-    while (n<b){
-        array_a[m+n] = last_half[n];    
-        n++;
-    }
-    
+    delete[] f_half;
+    delete[] e_half;
     return;
 }
