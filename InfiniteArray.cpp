@@ -31,7 +31,6 @@ int Array<t>::size(){
 
 template<typename t>
 int & Array<t>::operator[](int i){
-
     if(i >= a_size){    makeSpace(i - a_size + 1);    }
     return arr[i];
 }
