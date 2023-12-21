@@ -42,34 +42,29 @@ void mergeSort(int* array_a,int array_size){
     int n=0;
 
     while(m<a){
+        if(n==b){    break;    }
         while (n<b){
             if(first_half[m]<=last_half[n]){
                 array_a[m+n]=first_half[m];
+                m++;
                 break;
             }
             else{
                 array_a[m+n]=last_half[n];
+                n++;
             }
-            n++;
         }
-        if(n==b){
-            break;
-        }
-       m++;
+        m++;
     }
 
-    if(n==b){
-        while (m<a){
-            array_a[m+n] = first_half[m];
-            m++;
-        }
+    while (m<a){
+        array_a[m+n] = first_half[m];
+        m++;
     }
         
-    if(m==a){
-        while (n<b){
-            array_a[m+n] = last_half[n];    
-            n++;
-        }
+    while (n<b){
+        array_a[m+n] = last_half[n];    
+        n++;
     }
     
     return;
