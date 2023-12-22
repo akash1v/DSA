@@ -2,7 +2,7 @@ template<typename t>
 class Array{
 private:
     t* arr{};
-    int a_size{};
+    int siz{};
 
     void makeSpace(int);
 public:
@@ -14,24 +14,24 @@ public:
 
 template<typename t>
 void Array<t>::makeSpace(int a){
-    int* new_array = new t[a_size + a]{};
-    for (int i = 0; i < a_size; i++){
+    int* new_array = new t[siz + a]{};
+    for (int i = 0; i < siz; i++){
         new_array[i] = arr[i];
     }
     delete[] arr;
     arr = new_array;
     new_array = nullptr;
-    a_size = a_size + a;
+    siz = siz + a;
 }
 
 template<typename t>
 int Array<t>::size(){
-    return a_size;
+    return siz;
 }
 
 template<typename t>
 int & Array<t>::operator[](int i){
-    if(i >= a_size){    makeSpace(i - a_size + 1);    }
+    if(i >= siz){    makeSpace(i - siz + 1);    }
     return arr[i];
 }
 
