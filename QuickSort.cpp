@@ -1,5 +1,6 @@
 #include"Swap.cpp"
-void quickSort(int* array, int l, int h){
+template<typename t>
+void quickSort(t* array, int l, int h){
 
     if(h - l < 1){    return;    }
 
@@ -12,11 +13,11 @@ void quickSort(int* array, int l, int h){
         }
     }
     swap(array, m, h);
-
     quickSort(array, l, m-1);
     quickSort(array, m+1, h);
 }
 
-void quickSort(int* array, int size){
+template<typename t>
+void quickSort(t* array, int size){
     quickSort(array, 0, size - 1);
 }

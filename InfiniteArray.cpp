@@ -1,10 +1,9 @@
-template<typename t>
+#include"IncreaseArray.cpp"
 class Array{
 private:
-    t* arr{};
+    int* arr{};
     int siz{};
 
-    void makeSpace(int);
 public:
 
     int size();
@@ -12,30 +11,18 @@ public:
     ~Array();
 };
 
-template<typename t>
-void Array<t>::makeSpace(int a){
-    int* new_array = new t[siz + a]{};
-    for (int i = 0; i < siz; i++){
-        new_array[i] = arr[i];
-    }
-    delete[] arr;
-    arr = new_array;
-    new_array = nullptr;
-    siz = siz + a;
-}
-
-template<typename t>
-int Array<t>::size(){
+int Array::size(){
     return siz;
 }
 
-template<typename t>
-int & Array<t>::operator[](int i){
-    if(i >= siz){    makeSpace(i - siz + 1);    }
+int & Array::operator[](int i){
+    if(i >= siz){
+        increaseArray(arr, siz, i-siz + 1);
+        siz = i;
+    }
     return arr[i];
 }
 
-template<typename t>
-Array<t>::~Array(){
+Array::~Array(){
     delete[] arr;
 }

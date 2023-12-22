@@ -1,3 +1,4 @@
+#include"IncreaseArray.cpp"
 #include<iostream>
 using namespace std;
 class Node{
@@ -18,7 +19,6 @@ private:
 
     int search(Node*, char);
     int insert(Node*, char);
-    void makeSpace(Node*);
     void print(Node*);
 
 public:
@@ -26,20 +26,6 @@ public:
     void print();
 };
 
-void Tries::makeSpace(Node* ptr){
-    if(ptr->no_of_values<ptr->array_size){
-        return;
-    }
-
-    Node** new_array = new Node*[ptr->array_size+1]{};
-    for(int i=0;i<ptr->no_of_values;i++){
-        new_array[i] = ptr->array[i];
-    }
-    Node** old_array = ptr->array;
-    ptr->array = new_array;
-    ptr->array_size++;
-    delete(old_array);
-}
 int Tries::search(Node* ptr, char i){
     if(!ptr){return -1;}
 
@@ -75,7 +61,10 @@ void Tries::insert(char* str){
 }
 
 int Tries::insert(Node* ptr,char c){
-    makeSpace(ptr);
+    if(ptr->array_size == ptr->no_of_values){
+        increaseArray(ptr->array, ptr->array_size);
+        ptr->array_size++;
+    }
 
     int i=0;
     for(i;i<ptr->no_of_values;i++){

@@ -1,5 +1,6 @@
 #include"Swap.cpp"
-void selectionSort(int* array,int size){
+template<typename t>
+void selectionSort(t* array,int size){
     for (int i = 0; i < size - 1; i++){
         int k = i;
         for (int j = i + 1; j < size; j++){

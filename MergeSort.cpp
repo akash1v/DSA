@@ -1,6 +1,7 @@
 #include"MergeSortedArray.cpp"
 #include"Swap.cpp"
-void mergeSort(int* array,int size){
+template<typename t>
+void mergeSort(t* array,int size){
 
     if(size==1){ return; }
     
@@ -14,8 +15,8 @@ void mergeSort(int* array,int size){
     int e_size = size / 2;
     int f_size = size - e_size;
 
-    int f_half[f_size];
-    int e_half[e_size];
+    t f_half[f_size];
+    t e_half[e_size];
 
     int i = 0;
     for (int i; i < f_size; i++){
