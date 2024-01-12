@@ -6,7 +6,7 @@ void quickSort(t* array, int l, int h){
 
     int m = l;
 
-    for(int i = l; i <= h; i++){
+    for(int i = l; i < h; i++){
         if(array[i] < array[h]){
             swap(array, m, i);
             m++;
