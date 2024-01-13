@@ -12,8 +12,8 @@ void mergeSort(t* array,int size){
         return;
     }
 
-    int e_size = size / 2;
-    int f_size = size - e_size;
+    int f_size = size / 2;
+    int e_size = size - f_size;
 
     t f_half[f_size];
     t e_half[e_size];
