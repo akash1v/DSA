@@ -1,14 +1,7 @@
-class Node{
-    public:
-    int info;
-    Node* next{};
-};
-
+#include"LinkedList.cpp"
 class Queue{
 private:
-    Node* listfront{};
-    Node* listend{};
-    
+    LinkedList list;    
 public:
     void enqueue(int);
     int dequeue();
@@ -18,53 +11,21 @@ public:
 };
 
 void Queue::enqueue(int data){
-    Node* temp;
-    temp = new Node();
-    temp->info = data;
-    if(listend == nullptr){
-        listfront = temp;
-        listend = temp;
-    }else{
-        listend->next = temp;
-        listend = temp;
-    }
-    temp = nullptr;
+    list.insert(data);
 };
 
 int Queue::dequeue(){
-    if(listend == nullptr){
-        return;
-    }
-    Node* temp = listfront;
-    if(listend == listfront){
-        listend = nullptr;
-        listfront = nullptr;
-    }
-    else{
-        listfront = listfront->next;
-    }
-    int result = temp->info;
-    delete(temp);
-    return result;
+    return list.remove(0);
 };
 
 int Queue::peek(){
-    return listfront->info;
+    return list.at(0);
 };
 
 int Queue::len(){
-    if(isEmpty()){
-        return 0;
-    }
-    int count = 0;
-    Node* temp = listfront;
-    while(temp){
-        count++;
-        temp = temp->next;
-    }
+    return list.length();
 }
 
 bool Queue::isEmpty(){
-    if(listend == nullptr){    return true; };
-        return false;
+    return ! list.length();
 };

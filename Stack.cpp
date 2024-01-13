@@ -5,7 +5,7 @@ class Stack{
 private:
     int size = 10;
     int* array{}; 
-    int no_of_values{};
+    int top = -1;
 
 public:
     Stack();
@@ -27,27 +27,29 @@ Stack::Stack(int a){
 }
 
 void Stack::push(int key){
-    if(no_of_values!=size){
-        array[no_of_values]=key;
-        no_of_values++;
+    if(top!=size - 1){
+        array[++top]=key;
     };
 }
 
 int Stack::pop(){
-    if(no_of_values!=0){
-        no_of_values--;
-        return array[no_of_values];
+    if(top!=-1){
+        int k = array[top--];
+        return k;
     }
+    return 0;
 }
 
 int Stack::peek(){   
-    if(no_of_values!=0){
-        return array[no_of_values-1];
+    if(top!=-1){
+        return array[top];
     }
+    return 0;
 }
 
 bool Stack::isEmpty(){
-    return !no_of_values;
+    if(top==-1){    return true;    };
+    return false;
 }
 
 Stack::~Stack(){

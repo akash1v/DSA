@@ -1,28 +1,30 @@
 #include"IncreaseArray.cpp"
+template<typename t>
 class Array{
 private:
-    int* arr{};
-    int siz{};
+    t* array{};
+    int size{};
 
 public:
-
-    int size();
-    int & operator[](int i);
+    t & operator[](int i);
+    int operator()();
     ~Array();
 };
 
-int Array::size(){
-    return siz;
-}
-
-int & Array::operator[](int i){
-    if(i >= siz){
-        increaseArray(arr, siz, i-siz + 1);
-        siz = i;
+template<typename t>
+t & Array<t>::operator[](int i){
+    if(i >= size){
+        array = increaseArray(array, size, i-size + 1);
+        size = i+1;
     }
-    return arr[i];
+    return array[i];
 }
 
-Array::~Array(){
-    delete[] arr;
+template<typename t>
+int Array<t>::operator()(){
+    return size;
+}
+template<typename t>
+Array<t>::~Array(){
+    delete[] array;
 }

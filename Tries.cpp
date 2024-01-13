@@ -62,7 +62,7 @@ void Tries::insert(char* str){
 
 int Tries::insert(Node* ptr,char c){
     if(ptr->array_size == ptr->no_of_values){
-        increaseArray(ptr->array, ptr->array_size);
+        ptr->array = increaseArray(ptr->array, ptr->array_size);
         ptr->array_size++;
     }
 

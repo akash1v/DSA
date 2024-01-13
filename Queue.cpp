@@ -5,7 +5,8 @@ class Queue{
 private:
     int size = 10;
     int* array{}; 
-    int no_of_values{};
+    int nov{};
+    int front{};
 
 public:
     Queue();
@@ -27,31 +28,35 @@ Queue::Queue(int a){
 }
 
 void Queue::enqueue(int key){
-    if(no_of_values!=size){
-        array[no_of_values] = key;
-        no_of_values++;
+    if (nov == size){    return;    }
+    int k = 0;
+    if(nov >= front){
+        k = front + nov;
+        if(k >= size){    k -= size;    }
+    }else{
+        k = nov;
     }
+    array[k] = key;
+    nov++;
 }
 
 int Queue::dequeue(){
-    if(no_of_values!=0){   
-        int value = array[0];
-        for(int i=0;i<no_of_values;i++){
-            array[i]=array[i+1];
-        }
-        no_of_values--;
-        return value;
-    }
+    if(nov == 0){    return 0;    }
+    if(front >= size){    front -= size;    }  
+    int value = array[front++];
+    nov--;
+    return value;
 }
 
 int Queue::peek(){   
-    if(no_of_values!=0){
+    if(nov!=0){
         return array[0];
     }
+    return 0;
 }
 
 bool Queue::isEmpty(){
-    return !no_of_values;
+    return !nov;
 }
 
 Queue::~Queue(){

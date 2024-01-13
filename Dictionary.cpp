@@ -32,8 +32,8 @@ Dictionary<s,t>::Dictionary(int a){
 template<typename s, typename t>
 void Dictionary<s,t>::insert(s k, t v){
     if(no_of_values == size){
-        increaseArray(key, size);
-        increaseArray(value,size);
+        key = increaseArray(key, size);
+        value = increaseArray(value,size);
         size++;
     }
 

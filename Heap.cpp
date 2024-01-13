@@ -32,7 +32,7 @@ MinHeap<t>::MinHeap(int a){
 template<typename t>
 void MinHeap<t>::insert(int data){
     if(no_of_values == size){
-        increaseArray(array,size);
+        array = increaseArray(array,size);
         size++;
     }
     array[no_of_values] = data;
@@ -154,7 +154,7 @@ MaxHeap<t>::MaxHeap(int a){
 template<typename t>
 void MaxHeap<t>::insert(int data){
     if(no_of_values == size){
-        increaseArray(array,size);
+        array = increaseArray(array,size);
         size++;
     }
     array[no_of_values] = data;
