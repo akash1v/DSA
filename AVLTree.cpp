@@ -23,7 +23,8 @@ private :
     void insert(Node*,Node*);
     void remove(Node*);
     Node* search(Node*,int &);
-    
+    void copy(Node*);
+
     LRHeight height(Node*);
     int maxOf(LRHeight);
 
@@ -52,6 +53,9 @@ private :
     void destruct(Node*);
 public:
 
+    AVLTree(){};
+    AVLTree(AVLTree&);
+
     void insert(int);
     bool remove(int);
     bool search(int);
@@ -72,6 +76,16 @@ public:
     ~AVLTree();
 };
 
+AVLTree::AVLTree(AVLTree& avl){
+    copy(avl.root_node);
+}
+
+void AVLTree::copy(Node* node){
+    if(node == nullptr){    return;    }
+    insert(node->info);
+    copy(node->left);
+    copy(node->right);
+}
 
 void AVLTree::insert(int data){
     Node* new_node = new Node();

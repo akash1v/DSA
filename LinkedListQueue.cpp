@@ -6,12 +6,13 @@ public:
     void enqueue(int);
     int dequeue();
     int peek();
+    void print();
     int len();
     bool isEmpty();
 };
 
 void Queue::enqueue(int data){
-    list.insert(data);
+    list.insert(data,list.length());
 };
 
 int Queue::dequeue(){
@@ -22,6 +23,9 @@ int Queue::peek(){
     return list.at(0);
 };
 
+void Queue::print(){
+    list.print();
+}
 int Queue::len(){
     return list.length();
 }

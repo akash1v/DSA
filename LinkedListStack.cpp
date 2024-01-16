@@ -1,3 +1,4 @@
+#include<iostream>
 #include"LinkedList.cpp"
 class Stack{
 private:
@@ -5,7 +6,7 @@ private:
 public:
     void push(int);
     int pop();
-    int peek();
+    int peek(int);
     int len();
     bool isEmpty();
 };
@@ -18,8 +19,8 @@ int Stack::pop(){
     return list.remove(0);
 };
 
-int Stack::peek(){
-    return list.at(0);
+int Stack::peek(int a){
+    return list.at(a);
 };
 
 int Stack::len(){

@@ -13,19 +13,35 @@ private:
     int nov{};
     
 public:
+
+    LinkedList(){};
+    LinkedList(LinkedList&);
     void insert(int, int);
     int remove(int);
     int at(int);
     bool search(int);
     int length();
     void print();
+    ~LinkedList();
 };
 
-void LinkedList::insert(int data, int at = -1){
+LinkedList::LinkedList(LinkedList& list){
+    Node* temp = list.front;
+    while (temp != nullptr){
+        insert(temp->info,nov);
+        temp = temp->next;
+    }
+}
+
+void LinkedList::insert(int data, int at){
+
+    if(at < 0 || at > nov)
+        return;
+
     Node* new_node = new Node();
     new_node->info = data;
-
-    if(!end){
+    
+    if(nov == 0){
         front = new_node;
         end = new_node;
     }
@@ -33,11 +49,11 @@ void LinkedList::insert(int data, int at = -1){
         new_node->next = front;
         front = new_node;
     }
-    else if(at == nov || at == -1){
+    else if(at == nov){
         end->next = new_node;
         end = new_node;
     }
-    else if(at>0 && at<nov){
+    else{
         Node* temp = front;
         for(int i=1;i<at;i++){
             temp = temp->next;
@@ -46,30 +62,29 @@ void LinkedList::insert(int data, int at = -1){
         temp->next = new_node;
         temp = nullptr;
     }
-
     new_node = nullptr;
     nov++;
-    return;
-    
 }
 
-int LinkedList::remove(int at = -1){
+int LinkedList::remove(int at){
 
-    if(!end){    return 0;    }
+    if(at < 0 || at > nov-1 || nov == 0)
+        return 0;
     
     Node* temp = front;
 
-    if(front == end){
+    if(nov == 1){
         front = nullptr;
         end = nullptr;
     }
     else if(at == 0){
         front = front->next;
     }
-    else if(at == nov-1 || at == -1){
-        while(temp->next!=end){
+    else if(at == nov-1){
+
+        while(temp->next!=end)
             temp = temp->next;
-        }
+
         end = temp;
         temp = temp->next;
         end->next = nullptr;
@@ -92,11 +107,10 @@ int LinkedList::remove(int at = -1){
 }
 
 int LinkedList::at(int at){
-    if(!end){    return 0;   }
-    Node* temp = front;
-    if(at < 0 || at > nov-1){
+    if(at < 0 || at > nov-1 || nov == 0)
         return 0;
-    }
+
+    Node* temp = front;
     for(int i=0;i<at;i++){
         temp = temp->next;
     }
@@ -105,10 +119,11 @@ int LinkedList::at(int at){
 
 bool LinkedList::search(int data){
     Node* temp = front;
-    while(temp!=nullptr){
-        if(temp->info == data){
+    while(temp){
+
+        if(temp->info == data)
             return true;
-        }
+        
         temp = temp->next;
     }
     return false;
@@ -119,12 +134,16 @@ int LinkedList::length(){
 }
 
 void LinkedList::print(){
-    if(front){
-        Node* temp = front;
-        do{
-            std::cout<<temp->info<<"  ";
-            temp = temp->next;
-        }while(temp);
+    Node* temp = front;
+    while (temp){
+        std::cout<<temp->info<<"\t";
+        temp = temp->next;
+    }
+    std::cout<<std::endl;
+}
 
+LinkedList::~LinkedList(){
+    while (nov){
+        remove(0);
     }
 }
