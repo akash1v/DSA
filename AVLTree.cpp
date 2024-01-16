@@ -7,58 +7,60 @@ public:
     int right{};
 };
 
+template<typename t>
 class Node{
 public:
-    int info{};
-    Node* right{};
-    Node* left{};
-    Node* parent{};
+    t info{};
+    Node<t>* right{};
+    Node<t>* left{};
+    Node<t>* parent{};
+
+    Node(t data){    info = data;    }
 };
 
+
+template<typename t>
 class AVLTree{
 private :
 
-    Node* root_node{};
+    Node<t>* root_node{};
 
-    void insert(Node*,Node*);
-    void remove(Node*);
-    Node* search(Node*,int &);
-    void copy(Node*);
+    void insert(Node<t>*,Node<t>*);
+    void remove(Node<t>*);
+    Node<t>* search(Node<t>*, t&);
+    void copy(Node<t>*);
 
-    LRHeight height(Node*);
+    LRHeight height(Node<t>*);
     int maxOf(LRHeight);
 
-    void printInOrder(Node*);
-    void printReverseOrder(Node*);
-    void printPreOrder(Node*);
-    void printPostOrder(Node*);
-    void printPath(Node* ,int*,int &);
+    void printInOrder(Node<t>*);
+    void printReverseOrder(Node<t>*);
+    void printPreOrder(Node<t>*);
+    void printPostOrder(Node<t>*);
+    void printPath(Node<t>* ,t*,int &);
 
+    Node<t>* minimum(Node<t>*);
+    Node<t>* maximum(Node<t>*);
 
-    Node* predecessor(Node*,int &);
-    Node* successor(Node*,int &);
-    Node* minimum(Node*);
-    Node* maximum(Node*);
+    void AVLLeafCheck(Node<t>*);
+    void AVLBranchCheck(Node<t>*);
+    void LLLeaf(Node<t>*);
+    void LRLeaf(Node<t>*);
+    void RLLeaf(Node<t>*);
+    void RRLeaf(Node<t>*);
+    void LLBranch(Node<t>*);
+    void RRBranch(Node<t>*);
+    void UpdateBranch(Node<t>*,Node<t>*,Node<t>*);
 
-    void AVLLeafCheck(Node*);
-    void AVLBranchCheck(Node*);
-    void LLLeaf(Node*);
-    void LRLeaf(Node*);
-    void RLLeaf(Node*);
-    void RRLeaf(Node*);
-    void LLBranch(Node*);
-    void RRBranch(Node*);
-    void UpdateBranch(Node*,Node*,Node*);
-
-    void destruct(Node*);
+    void destruct(Node<t>*);
 public:
 
     AVLTree(){};
-    AVLTree(AVLTree&);
+    AVLTree(AVLTree<t>&);
 
-    void insert(int);
-    bool remove(int);
-    bool search(int);
+    void insert(t);
+    void remove(t);
+    bool search(t);
     
     int height();
 
@@ -68,28 +70,31 @@ public:
     void printPostOrder();
     void printPath();
     
-    int minimum();
-    int maximum();
-    int predecessor(int);
-    int successor(int);
+    t minimum();
+    t maximum();
+    t predecessor(t);
+    t successor(t);
     
     ~AVLTree();
 };
 
-AVLTree::AVLTree(AVLTree& avl){
+template<typename t>
+AVLTree<t>::AVLTree(AVLTree<t>& avl){
     copy(avl.root_node);
 }
 
-void AVLTree::copy(Node* node){
+template<typename t>
+void AVLTree<t>::copy(Node<t>* node){
     if(node == nullptr){    return;    }
     insert(node->info);
     copy(node->left);
     copy(node->right);
 }
 
-void AVLTree::insert(int data){
-    Node* new_node = new Node();
-    new_node->info = data;
+template<typename t>
+void AVLTree<t>::insert(t data){
+    Node<t>* new_node = new Node<t>(data);
+
     if(root_node){
         insert(root_node,new_node);
     }
@@ -99,7 +104,8 @@ void AVLTree::insert(int data){
     };
 };
 
-void AVLTree::insert(Node* ptr, Node* new_node){
+template<typename t>
+void AVLTree<t>::insert(Node<t>* ptr, Node<t>* new_node){
     if(new_node->info<ptr->info){
         if(ptr->left){
             insert(ptr->left,new_node);
@@ -128,11 +134,13 @@ void AVLTree::insert(Node* ptr, Node* new_node){
     }
 };
 
-bool AVLTree::search(int data){
+template<typename t>
+bool AVLTree<t>::search(t data){
     return search(root_node,data);
 };
 
-Node* AVLTree::search(Node* ptr, int & data){
+template<typename t>
+Node<t>* AVLTree<t>::search(Node<t>* ptr, t & data){
     if(!ptr){    return nullptr;    }
     
     if(data == ptr->info){
@@ -146,11 +154,13 @@ Node* AVLTree::search(Node* ptr, int & data){
     }
 };
 
-int AVLTree::height(){
+template<typename t>
+int AVLTree<t>::height(){
     return maxOf(height(root_node));
 }
 
-LRHeight AVLTree::height(Node* ptr){    
+template<typename t>
+LRHeight AVLTree<t>::height(Node<t>* ptr){    
     LRHeight h;
     if(ptr){
         if(ptr->left){
@@ -163,26 +173,31 @@ LRHeight AVLTree::height(Node* ptr){
     return h;
 }
 
-int AVLTree::maxOf(LRHeight ptr){
+template<typename t>
+int AVLTree<t>::maxOf(LRHeight ptr){
     return ptr.left > ptr.right ? ptr.left : ptr.right;
 }
 
-void AVLTree::printInOrder(){
+template<typename t>
+void AVLTree<t>::printInOrder(){
     printInOrder(root_node);
 }
 
-void AVLTree::printInOrder(Node* ptr){
+template<typename t>
+void AVLTree<t>::printInOrder(Node<t>* ptr){
     if(!ptr){    return;    }
     printInOrder(ptr->left);
     cout<<ptr->info<<"  ";
     printInOrder(ptr->right);
 }
 
-void AVLTree::printReverseOrder(){
-    printInOrder(root_node);
+template<typename t>
+void AVLTree<t>::printReverseOrder(){
+    printReverseOrder(root_node);
 }
 
-void AVLTree::printReverseOrder(Node* ptr){
+template<typename t>
+void AVLTree<t>::printReverseOrder(Node<t>* ptr){
     if(!ptr){    return;    }
     printReverseOrder(ptr->right);
     cout<<ptr->info<<"  ";
@@ -190,11 +205,13 @@ void AVLTree::printReverseOrder(Node* ptr){
 
 }
 
-void AVLTree::printPreOrder(){
+template<typename t>
+void AVLTree<t>::printPreOrder(){
     printPreOrder(root_node);
 }
 
-void AVLTree::printPreOrder(Node* ptr){
+template<typename t>
+void AVLTree<t>::printPreOrder(Node<t>* ptr){
     if(!ptr){    return;    }
     cout<<ptr->info<<"  ";
     printPreOrder(ptr->left);
@@ -202,11 +219,13 @@ void AVLTree::printPreOrder(Node* ptr){
 }
 
 
-void AVLTree::printPostOrder(){
+template<typename t>
+void AVLTree<t>::printPostOrder(){
     printPostOrder(root_node);
 }
 
-void AVLTree::printPostOrder(Node* ptr){
+template<typename t>
+void AVLTree<t>::printPostOrder(Node<t>* ptr){
     if(!ptr){    return;    }
     cout<<ptr->info<<"  ";
     printPostOrder(ptr->left);
@@ -214,15 +233,16 @@ void AVLTree::printPostOrder(Node* ptr){
 }
 
 
-void AVLTree::printPath(){
+template<typename t>
+void AVLTree<t>::printPath(){
     if(!root_node){    return;     }
-    int* array;
-    array = new int[maxOf(height(root_node))+1];
+    t* array = new int[maxOf(height(root_node))+1];
     int count = 0;
     printPath(root_node,array,count);
 }
 
-void AVLTree::printPath(Node* ptr,int* array,int &count){
+template<typename t>
+void AVLTree<t>::printPath(Node<t>* ptr,t* array,int &count){
     array[count] = ptr->info;
     count++;
     if(!ptr->left  &&  !ptr->right){
@@ -242,13 +262,15 @@ void AVLTree::printPath(Node* ptr,int* array,int &count){
     }
 }
 
-int AVLTree::minimum(){
-    Node* ptr = minimum(root_node);
+template<typename t>
+t AVLTree<t>::minimum(){
+    Node<t>* ptr = minimum(root_node);
     if(ptr){   return ptr->info;   };
     return 0;
 }
 
-Node* AVLTree::minimum(Node* ptr){
+template<typename t>
+Node<t>* AVLTree<t>::minimum(Node<t>* ptr){
     if(ptr){
         while(ptr->left){
             ptr = ptr->left;
@@ -259,13 +281,15 @@ Node* AVLTree::minimum(Node* ptr){
 }
 
 
-int AVLTree::maximum(){
-    Node* ptr = maximum(root_node);
+template<typename t>
+t AVLTree<t>::maximum(){
+    Node<t>* ptr = maximum(root_node);
     if(ptr){   return ptr->info;   };
     return 0;
 }
 
-Node* AVLTree::maximum(Node* ptr){
+template<typename t>
+Node<t>* AVLTree<t>::maximum(Node<t>* ptr){
     if(ptr){
         while(ptr->right){
             ptr = ptr->right;
@@ -277,92 +301,63 @@ Node* AVLTree::maximum(Node* ptr){
 
 
 
-int AVLTree::predecessor(int data){
-    Node* temp = search(root_node, data);
+template<typename t>
+t AVLTree<t>::predecessor(t data){
+    Node<t>* temp = search(root_node, data);
     if(!temp){
         return 0;
     }
-    Node* temp2 = predecessor(temp, data);
+    Node<t>* temp2 = maximum(temp->left);
     if(temp2){
-        return temp->info;    
+        return temp2->info;    
     }
-    if(temp->parent && temp->parent->info < temp->info){
-        return temp->parent->info;  
-    };
+    while (temp->parent)
+    {
+        if(temp->parent->info < data){
+            return temp->parent->info;
+        }
+        temp = temp->parent;
+    }
+    
     return 0;
 }
 
-Node* AVLTree::predecessor(Node* ptr,int & data ){
-    if(!ptr){  return ptr;  }
-
-    if(data > ptr->info ){
-        if(ptr->right){
-            if(data <= minimum(ptr->right)->info){
-                return ptr;
-            }
-            else{
-                return predecessor(ptr->right,data);
-            }
-        }
-        else{
-            return ptr;
-        }
-    }
-    else{
-        return predecessor(ptr->left,data);
-    }
-};
-
-int AVLTree::successor(int data){
-    Node* temp = search(root_node, data);
+template<typename t>
+t AVLTree<t>::successor(t data){
+    Node<t>* temp = search(root_node, data);
     if(!temp){    
         return 0;
     }
-    Node* temp2 = successor(temp, data);
+    Node<t>* temp2 = minimum(temp->right);
     if(temp2){
         return temp2->info;
     }
-    if(temp->parent && temp->parent->info < temp->info){
-        return temp->parent->info;  
-    };
+    while (temp->parent)
+    {
+        if(temp->parent->info > data){
+            return temp->parent->info;
+        }
+        temp = temp->parent;
+    }
     return 0;
 }
 
-Node* AVLTree::successor(Node* ptr,int & data){
-    if(!ptr){  return ptr;  }
-
-    if(data < ptr->info ){
-        if(ptr->left){
-            if(data >= maximum(ptr->left)->info){
-                return ptr;
-            }
-            else{
-                return successor(ptr->left,data);
-            }
-        }
-        else{
-            return ptr;
-        }
-    }
-    else{
-        return successor(ptr->right,data);
-    }
-};
-
-bool AVLTree::remove(int data){
-    Node* temp;
+template<typename t>
+void AVLTree<t>::remove(t data){
+    Node<t>* temp;
     temp = search(root_node,data);
     if(temp){    
         remove(temp);
-        return true;
     }
-    return false;
 }
 
-void AVLTree::remove(Node* ptr){
-    Node* temp;
-    temp = successor(ptr,ptr->info);
-    if(!temp){    temp = predecessor(ptr,ptr->info);    }
+template<typename t>
+void AVLTree<t>::remove(Node<t>* ptr){
+
+    Node<t>* temp{};
+    if(ptr->right){    temp = minimum(ptr->right);    }
+    if(!temp && ptr->left){    temp = maximum(ptr->left);    }
+
     if(temp){
         ptr->info = temp->info;
         return remove(temp);
@@ -370,7 +365,6 @@ void AVLTree::remove(Node* ptr){
     else{
         if(ptr->parent == nullptr){
             root_node = nullptr;
-            return;
         }
         else if(ptr->parent->right == ptr){
             ptr->parent->right = nullptr;
@@ -384,7 +378,8 @@ void AVLTree::remove(Node* ptr){
     }
 }
 
-void AVLTree::AVLLeafCheck(Node* ptr){
+template<typename t>
+void AVLTree<t>::AVLLeafCheck(Node<t>* ptr){
     LRHeight h,h2;
     h = height(ptr);
     if(h.left-h.right > 1){
@@ -400,7 +395,8 @@ void AVLTree::AVLLeafCheck(Node* ptr){
     AVLBranchCheck(ptr->parent);
 };
 
-void AVLTree::UpdateBranch(Node* parent,Node* old_child,Node* new_child){
+template<typename t>
+void AVLTree<t>::UpdateBranch(Node<t>* parent,Node<t>* old_child,Node<t>* new_child){
     if(!parent){
         root_node = new_child;
     }
@@ -413,8 +409,9 @@ void AVLTree::UpdateBranch(Node* parent,Node* old_child,Node* new_child){
     new_child->parent = parent;
 }
 
-void AVLTree::LLLeaf(Node* ptr){
-    Node* temp = ptr->left;
+template<typename t>
+void AVLTree<t>::LLLeaf(Node<t>* ptr){
+    Node<t>* temp = ptr->left;
     UpdateBranch(ptr->parent,ptr,temp);
     temp->right = ptr;
     temp->right->parent = temp;
@@ -422,8 +419,9 @@ void AVLTree::LLLeaf(Node* ptr){
     ptr = nullptr;
 };
 
-void AVLTree::RRLeaf(Node* ptr){
-    Node* temp = ptr->right;
+template<typename t>
+void AVLTree<t>::RRLeaf(Node<t>* ptr){
+    Node<t>* temp = ptr->right;
     UpdateBranch(ptr->parent,ptr,temp);
     temp->left = ptr;
     temp->left->parent = temp;
@@ -431,8 +429,9 @@ void AVLTree::RRLeaf(Node* ptr){
     ptr = nullptr;
 };
 
-void AVLTree::LRLeaf(Node* ptr){
-    Node* temp = ptr->left->right;
+template<typename t>
+void AVLTree<t>::LRLeaf(Node<t>* ptr){
+    Node<t>* temp = ptr->left->right;
     UpdateBranch(ptr->parent,ptr,temp);
     temp->right = ptr;
     temp->right->parent = temp;
@@ -443,8 +442,9 @@ void AVLTree::LRLeaf(Node* ptr){
     ptr = nullptr;
 };
 
-void AVLTree::RLLeaf(Node* ptr){
-    Node* temp = ptr->right->left;
+template<typename t>
+void AVLTree<t>::RLLeaf(Node<t>* ptr){
+    Node<t>* temp = ptr->right->left;
     UpdateBranch(ptr->parent,ptr,temp);
     temp->left = ptr;
     temp->left->parent = temp;
@@ -455,7 +455,8 @@ void AVLTree::RLLeaf(Node* ptr){
     ptr = nullptr;
 };
 
-void AVLTree::AVLBranchCheck(Node* ptr){
+template<typename t>
+void AVLTree<t>::AVLBranchCheck(Node<t>* ptr){
     if(!ptr){    return;    }
     LRHeight h,h2;
     h = height(ptr);
@@ -474,8 +475,9 @@ void AVLTree::AVLBranchCheck(Node* ptr){
     AVLBranchCheck(ptr->parent);
 };
 
-void AVLTree::LLBranch(Node* ptr){
-    Node* temp = ptr->left;
+template<typename t>
+void AVLTree<t>::LLBranch(Node<t>* ptr){
+    Node<t>* temp = ptr->left;
     UpdateBranch(ptr->parent,ptr,temp);
     ptr->left = temp->right;
     ptr->left->parent = ptr;
@@ -484,23 +486,26 @@ void AVLTree::LLBranch(Node* ptr){
     ptr = nullptr;    
 };
 
-void AVLTree::RRBranch(Node* ptr){
-    Node* temp = ptr->right;
+template<typename t>
+void AVLTree<t>::RRBranch(Node<t>* ptr){
+    Node<t>* temp = ptr->right;
     UpdateBranch(ptr->parent,ptr,temp);
     ptr->right = temp->left;
     ptr->right->parent = ptr;
     temp->left = ptr;
-    ptr->left->parent = temp;
+    temp->left->parent = temp;
     ptr=nullptr;
 };
 
-void AVLTree::destruct(Node* ptr){
+template<typename t>
+void AVLTree<t>::destruct(Node<t>* ptr){
     if(!ptr){   return;    }
     destruct(ptr->left);
     destruct(ptr->right);
     delete(ptr);
 }
 
-AVLTree::~AVLTree(){
+template<typename t>
+AVLTree<t>::~AVLTree(){
     destruct(root_node);
 }

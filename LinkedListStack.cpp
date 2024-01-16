@@ -1,32 +1,39 @@
 #include<iostream>
 #include"LinkedList.cpp"
+
+template<typename t>
 class Stack{
 private:
-    LinkedList list;
+    LinkedList<t> list;
 public:
     void push(int);
-    int pop();
-    int peek(int);
+    t pop();
+    t peek();
     int len();
     bool isEmpty();
 };
 
-void Stack::push(int data){
+template<typename t>
+void Stack<t>::push(int data){
     list.insert(data, 0);
 };
 
-int Stack::pop(){
+template<typename t>
+t Stack<t>::pop(){
     return list.remove(0);
 };
 
-int Stack::peek(int a){
-    return list.at(a);
+template<typename t>
+t Stack<t>::peek(){
+    return list.at(0);
 };
 
-int Stack::len(){
+template<typename t>
+int Stack<t>::len(){
     return list.length();    
 }
 
-bool Stack::isEmpty(){
+template<typename t>
+bool Stack<t>::isEmpty(){
     return ! list.length();
 };

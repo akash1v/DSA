@@ -1,45 +1,50 @@
 //Double Headed Linked List
 #include<iostream>
 
+template<typename t>
 class Node{
-    public:
-    int info{};
-    Node* next{};
-    Node* prev{};
+public:
+    t info{};
+    Node<t>* next{};
+    Node<t>* prev{};
+
+    Node(t data){    info = data;    }
 };
 
+template<typename t>
 class DHLList{
 private:
-    Node* front{};
-    Node* end{};
+    Node<t>* front{};
+    Node<t>* end{};
     int nov;
 
 public:
 
     DHLList(){};
-    DHLList(DHLList &);
-    void insert(int, int);
-    int remove(int);
-    int at(int);
-    bool search(int);
+    DHLList(DHLList<t> &);
+    void insert(t, int);
+    t remove(int);
+    t at(int);
+    int search(t);
     int length();
     void print();
     ~DHLList();
 };
 
-DHLList::DHLList(DHLList & obj){
-    Node* temp = obj.front;
+template<typename t>
+DHLList<t>::DHLList(DHLList & obj){
+    Node<t>* temp = obj.front;
     while (temp){
         insert(temp->info, nov);
     }
 }
 
-void DHLList::insert(int data,int at){
+template<typename t>
+void DHLList<t>::insert(t data,int at){
 
     if(at < 0 || at > nov){    return;    }
 
-    Node* new_node = new Node();
-    new_node->info = data;
+    Node<t>* new_node = new Node(data);
     
     if(nov == 0){
         front = new_node;
@@ -56,7 +61,7 @@ void DHLList::insert(int data,int at){
         end = new_node;
     }
     else{
-        Node* temp;
+        Node<t>* temp;
         temp = front;
         for(int i=0;i<at;i++){
             temp = temp->next;
@@ -70,11 +75,14 @@ void DHLList::insert(int data,int at){
     nov++;
 }
 
-int DHLList::remove(int at){    
+template<typename t>
+t DHLList<t>::remove(int at){    
 
-    if(at < 0 || at > nov-1 || nov == 0){    return 0;    }
+    t result{};
 
-    Node* temp = front;
+    if(at < 0 || at > nov-1 || nov == 0){    return result;    }
+
+    Node<t>* temp = front;
     if(nov == 1){
         end = nullptr;
         front = nullptr;
@@ -96,37 +104,41 @@ int DHLList::remove(int at){
         temp->prev->next = temp->next;
         temp->next->prev  = temp->prev;
     }
-    int result = temp->info;
+    result = temp->info;
     delete(temp);
     nov--;
     return result;
 }
 
-int DHLList::at(int at){   
-    Node* temp = front;
+template<typename t>
+t DHLList<t>::at(int at){   
+    Node<t>* temp = front;
     for(int i=0;i<at;i++){
         temp = temp->next;
     }
     return temp->info;
 }
 
-bool DHLList::search(int a){
-    Node* temp = front;
+template<typename t>
+int DHLList<t>::search(t a){
+    Node<t>* temp = front;
     for (int i = 0; i < nov; i++){
         if(temp->info == a){
-            return 1;
+            return i;
         }
         temp = temp->next;
     }
-    return 0;
+    return -1;
 }
 
-int DHLList::length(){
+template<typename t>
+int DHLList<t>::length(){
     return nov;
 }
 
-void DHLList::print(){
-    Node* temp = front;
+template<typename t>
+void DHLList<t>::print(){
+    Node<t>* temp = front;
     for(int i=0; i < nov;i++){
         std::cout<<temp->info<<"\t";
         temp = temp->next;
@@ -134,9 +146,9 @@ void DHLList::print(){
     std::cout<<std::endl;
 }
 
-DHLList::~DHLList(){
+template<typename t>
+DHLList<t>::~DHLList(){
     while(nov){
         remove(0);
-    }
-    
+    }    
 }
