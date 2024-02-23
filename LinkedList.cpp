@@ -1,44 +1,50 @@
+#pragma once
 #include<iostream>
+template<typename t>
 class Node{
     public:
-    int info{};
-    Node* next{};
+    t info{};
+    Node<t>* next{};
+
+    Node(t data){    info = data;    }
 };
 
+template<typename t>
 class LinkedList{
 private:
-    Node* front{};
-    Node* end{};
+    Node<t>* front{};
+    Node<t>* end{};
     int nov{};
     
 public:
 
     LinkedList(){};
-    LinkedList(LinkedList&);
-    void insert(int, int);
-    int remove(int);
-    int at(int);
-    bool search(int);
+    LinkedList(LinkedList<t>&);
+    void insert(t, int);
+    t remove(int);
+    t at(int);
+    int search(t);
     int length();
     void print();
     ~LinkedList();
 };
 
-LinkedList::LinkedList(LinkedList& list){
-    Node* temp = list.front;
+template<typename t>
+LinkedList<t>::LinkedList(LinkedList<t>& list){
+    Node<t>* temp = list.front;
     while (temp != nullptr){
         insert(temp->info,nov);
         temp = temp->next;
     }
 }
 
-void LinkedList::insert(int data, int at){
+template<typename t>
+void LinkedList<t>::insert(t data, int at){
 
     if(at < 0 || at > nov)
         return;
 
-    Node* new_node = new Node();
-    new_node->info = data;
+    Node<t>* new_node = new Node(data);
     
     if(nov == 0){
         front = new_node;
@@ -53,7 +59,7 @@ void LinkedList::insert(int data, int at){
         end = new_node;
     }
     else{
-        Node* temp = front;
+        Node<t>* temp = front;
         for(int i=1;i<at;i++){
             temp = temp->next;
         }
@@ -65,12 +71,13 @@ void LinkedList::insert(int data, int at){
     nov++;
 }
 
-int LinkedList::remove(int at){
+template<typename t>
+t LinkedList<t>::remove(int at){
 
     if(at < 0 || at > nov-1 || nov == 0)
         return 0;
     
-    Node* temp = front;
+    Node<t>* temp = front;
 
     if(nov == 1){
         front = nullptr;
@@ -90,7 +97,7 @@ int LinkedList::remove(int at){
     }
     else{
         
-        Node* temp2;
+        Node<t>* temp2;
         for(int i=0;i<at;i++){
             temp2 = temp;
             temp = temp->next;
@@ -99,41 +106,46 @@ int LinkedList::remove(int at){
         temp2->next = temp->next;
         temp2 = nullptr;
     }
-    int i = temp->info;
+    t result = temp->info;
     delete(temp);
     nov--;
-    return i;
+    return result;
 }
 
-int LinkedList::at(int at){
+template<typename t>
+t LinkedList<t>::at(int at){
     if(at < 0 || at > nov-1 || nov == 0)
         return 0;
 
-    Node* temp = front;
+    Node<t>* temp = front;
     for(int i=0;i<at;i++){
         temp = temp->next;
     }
     return temp->info;
 }
 
-bool LinkedList::search(int data){
-    Node* temp = front;
-    while(temp){
-
-        if(temp->info == data)
-            return true;
-        
+template<typename t>
+int LinkedList<t>::search(t data){
+    Node<t>* temp = front;
+    for (int i = 0; i < nov; i++)
+    {
+        if(temp->info == data){
+            return i;
+        }
         temp = temp->next;
     }
-    return false;
+    
+    return -1;
 }
 
-int LinkedList::length(){
+template<typename t>
+int LinkedList<t>::length(){
     return nov;
 }
 
-void LinkedList::print(){
-    Node* temp = front;
+template<typename t>
+void LinkedList<t>::print(){
+    Node<t>* temp = front;
     while (temp){
         std::cout<<temp->info<<"\t";
         temp = temp->next;
@@ -141,7 +153,8 @@ void LinkedList::print(){
     std::cout<<std::endl;
 }
 
-LinkedList::~LinkedList(){
+template<typename t>
+LinkedList<t>::~LinkedList(){
     while (nov){
         remove(0);
     }

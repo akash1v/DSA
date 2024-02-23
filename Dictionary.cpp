@@ -1,108 +1,66 @@
-#include"IncreaseArray.cpp"
+#pragma once
+#include<iostream>
+#include"LinkedList.cpp"
 template<typename s, typename t>
-class Dictionary
-{
+class Dictionary{
 private:
-    s* key{};
-    t* value{};
-    int size{};
-    int no_of_values{};
+    LinkedList<s> keys;
+    LinkedList<t> values;
+
 public:
-    Dictionary(){};
-    Dictionary(int);
 
-    void insert(s, t);
-    s key(int);
-    s key(t);
-    t value(int);
-    t value(s);
-    void remove(s);
-    void remove(t);
-
-    ~Dictionary();
+    void insert(s k, t v);
+    void removeAt(int at);
+    t remove(s k);
+    s remove(t k);
+    s key(t v);
+    s keyAt(int at);
+    t value(s k);
+    t valueAt(int at);
 };
 
 template<typename s, typename t>
-Dictionary<s,t>::Dictionary(int a){
-    key = new t[a];
-    value = new t[a];
-    size = a;
-};
-
-template<typename s, typename t>
-void Dictionary<s,t>::insert(s k, t v){
-    if(no_of_values == size){
-        key = increaseArray(key, size);
-        value = increaseArray(value,size);
-        size++;
-    }
-
-    key[no_of_values] = k;
-    value[no_of_values] = v;
-    no_of_values++;
-}
-
-
-template<typename s, typename t>
-s Dictionary<s,t>::key(int a){
-    return key[a];
+void Dictionary<s, t>::insert(s k, t v){
+    keys.insert(k, keys.length());
+    values.insert(v, values.length());    
 }
 
 template<typename s, typename t>
-s Dictionary<s,t>::key(t a){
-    for (int i = 0; i < no_of_values; i++){
-        if(value[i] == a){
-            return key[a];
-        }
-    }
+void Dictionary<s, t>::removeAt(int at){
+    keys.remove(at);
+    values.remove(at);
 }
 
 template<typename s, typename t>
-t Dictionary<s,t>::value(int a){
-    return value[a];
+t Dictionary<s, t>::remove(s k){
+    int at = keys.search(k);
+    keys.remove(at);
+    return value.remove(at);
 }
 
 template<typename s, typename t>
-t Dictionary<s,t>::value(s a){
-    for (int i = 0; i < no_of_values; i++){
-        if(key[i] == a){
-            return value[a];
-        }
-    }
+s Dictionary<s, t>::remove(t v){
+    int at = values.search(v);
+    values.remove(at);
+    return keys.remove(at);
 }
 
 template<typename s, typename t>
-void Dictionary<s,t>::remove(s a){
-    int i=0;
-    for (i, i < no_of_values; i++){
-        if(key[i] == a){
-            result = value[i];
-        }
-    }
-    for(int k=i; k < no_of_values - 1;k++){
-        key[k] = key[k + 1];
-        value[k] = value[k+1];
-    }
-    no_of_values--;
+s Dictionary<s, t>::key(t v){
+    return keys.at(values.search(v));
 }
 
 template<typename s, typename t>
-void Dictionary<s,t>::remove(t a){
-    int i=0;
-    for (i, i < no_of_values; i++){
-        if(value[i] == a){
-            result = value[i];
-        }
-    }
-    for(int k=i; k < no_of_values - 1;k++){
-        key[k] = key[k + 1];
-        value[k] = value[k+1];
-    }
-    no_of_values--;
+s Dictionary<s, t>::keyAt(int at){
+    return keys.at(at);
 }
 
 template<typename s, typename t>
-Dictionary<s,t>::~Dictionary(){
-    delete[] key;
-    delete[] value;
+t Dictionary<s, t>::value(s k){
+    return values.at(keys.search(k));
+}
+
+template<typename s, typename t>
+t Dictionary<s, t>::valueAt(int at){
+    return values.at(at);
 }
