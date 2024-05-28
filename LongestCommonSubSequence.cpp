@@ -1,41 +1,7 @@
 #include<string>
 #include<vector>
 #include<iostream>
-#include"Max.cpp"
 using namespace std;
-
-// string LCSS(string& a, string& b)
-// {
-//     string lcs = "";
-//     for (int k = 0; k < a.size(); k++)
-//     {
-//         if(lcs.size() >= a.size() - k){    break;    }
-
-//         string temp = "";
-
-//         int last_location = -1;
-//         for (int i = k; i < a.size(); i++)
-//         {
-//             for (int j = last_location + 1; j < b.size(); j++)
-//             {
-//                 if(a[i] == b[j])
-//                 {
-//                     temp += b[j];
-//                     last_location = j;
-//                     i++;
-//                 }
-//             }
-            
-//         }
-//         if (lcs.size() < temp.size())
-//         {
-//             lcs = temp;
-//         }
-        
-//     }
-//     return lcs;
-// }
-
 
 string LCSS(string& a, string& b)
 {
@@ -56,7 +22,7 @@ string LCSS(string& a, string& b)
     }
     
     string result{};
-    for (int i = b.size(),j = a.size(); i >= 0 || j > 0; i--)
+    for (int i = b.size(),j = a.size(); i > 0 && j > 0; i--)
     {
         if (matrix[j][i] != matrix[j][i - 1])
         {
@@ -69,8 +35,8 @@ string LCSS(string& a, string& b)
 }
 int main()
 {
-    string a = "abcd";
-    string b = "bd";
+    string a = "ewoidsklnd";
+    string b = "edekl";
     string c = LCSS(b, a);
     cout<<c<<endl;
     return 0;

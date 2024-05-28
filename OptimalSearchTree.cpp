@@ -2,7 +2,7 @@
 #include<vector>
 using namespace std;
 
-vector<vector<vector<int>>> OptimalSearchTree(int* k, int* s, int* u, int n/*no of keyss*/)
+vector<vector<vector<int>>> OptimalSearchTree(int* s, int* u, int n/*no of keyss*/)
 {
     n++;
     vector<vector<vector<int>>> A(2, vector<vector<int>>(n,vector<int>(n,0)));
@@ -36,4 +36,10 @@ vector<vector<vector<int>>> OptimalSearchTree(int* k, int* s, int* u, int n/*no 
         }
     }
     return A;
+}
+
+int main(){
+    int s[5] = {1,2,3,4,5};
+    int u[6] = {-1,-2,-3,-4,-5,-6};
+    vector<vector<vector<int>>> A = OptimalSearchTree(s, u, 5);
 }
