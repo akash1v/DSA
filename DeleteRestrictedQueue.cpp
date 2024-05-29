@@ -2,7 +2,7 @@
 #include"LinkedList.cpp"
 class Queue{
 private:
-    LinkedList list;
+    LinkedList<int> list;
 public:
     void enqueueFront(int);
     void enqueueEnd(int);
@@ -16,7 +16,7 @@ void Queue::enqueueFront(int data){
 }
 
 void Queue::enqueueEnd(int data){
-    list.insert(data);
+    list.insert(data, list.length());
 };
 
 int Queue::dequeue(){

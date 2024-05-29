@@ -1,36 +1,60 @@
 #include<iostream>
-#include<algorithm>
-#define max_fib 1000
-
 using namespace std;
-int fibonacci(int num)
-{
-    
-    if (num == 0 || num == 1)
-    {
-        return num;
+#define DEFAULT_FIB 10              //default fib should be greater than 0
+
+class Fibonacci{
+private:
+    int max_fib;
+    double* dm = nullptr;
+
+    double find(int a) {
+        if (dm[a] != -1) {
+            return dm[a];
+        }
+        dm[a] = find(a - 1) + find(a - 2);
+        return dm[a];
     }
 
-    static int fib[max_fib];
-    fill(begin(fib), end(fib), -1);
-    fib[0] = 0;
-    fib[1] = 1;
-
-
-    if (fib[num - 1] == -1)
-    {
-        fib[num - 1] = fibonacci(num - 2) + fibonacci(num - 3);
+    void Extend(int a){
+        double* temp = new double[a + 1];
+        for (int i = 0;i <= max_fib; i++){
+            temp[i] = dm[i];
+        }
+        for (int i = max_fib + 1;i <= a; i++){
+            temp[i] = -1;
+        }
+        max_fib = a;
+        delete[] dm;
+        dm = temp;
+        temp = nullptr;
     }
-    
-    int result = fib[num - 1] + fib[num - 2];
-    return result;
-}
 
-int main()
-{
-    // for (int i = 0; i < 15; i++)
-    // {
-        cout<<fibonacci(15)<<endl;
-    // }
-    return 0;
-}
+public:
+    Fibonacci(int a){
+        if(a < 1){
+            a = DEFAULT_FIB;
+        }
+        max_fib = a;
+        dm = new double[a + 1]{0, 1};
+        for (int i = 2; i <= a; i++){
+            dm[i] = -1;
+        }
+        find(max_fib);
+    }
+
+    Fibonacci() : Fibonacci(DEFAULT_FIB){}
+
+    double value(int a){
+        if (a < 0){
+            return -1;
+        }
+        if( a > max_fib){
+            Extend(a);
+        }
+        return find(a);
+    }
+
+    ~Fibonacci(){
+        delete[] dm;
+    }
+};

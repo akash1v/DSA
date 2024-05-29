@@ -2,7 +2,7 @@
 #include"LinkedList.cpp"
 class Stack{
 private:
-    LinkedList list;
+    LinkedList<int> list;
 public:
     void pushFront(int);
     void pushEnd(int);
@@ -12,7 +12,7 @@ public:
 };
 
 void Stack::pushFront(int data){
-    list.insert(data);
+    list.insert(data, list.length());
 }
 
 void Stack::pushEnd(int data){
