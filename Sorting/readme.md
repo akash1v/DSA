@@ -1,0 +1,1 @@
+it do not consist of divide and conquer sorting algorithms
