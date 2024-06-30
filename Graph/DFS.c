@@ -1,6 +1,39 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include"AdjointMatrix.c"
-#include"Stack.c"
+
+struct Stack{
+    int* array;
+    int top;
+    int size;
+};
+
+struct Stack* getStack(int size){
+    struct Stack* temp = (struct Stack*)malloc(sizeof(struct Stack));
+    temp->array = (int*)malloc(size*sizeof(int));
+    temp->size = size;
+    temp->top = -1;
+    return temp;
+}
+
+void push(struct Stack* ptr,int val){
+    if(ptr->top < ptr->size - 1){
+        ptr->top++;
+        ptr->array[ptr->top] = val;
+    }else{
+        printf("Stack is full\n");
+    }
+}
+
+int pop(struct Stack* ptr){
+    if(ptr->top < 0){
+        printf("Stack is empty\n");
+    }else{
+        int pop_val = ptr->array[ptr->top];
+        ptr->top--;
+        return pop_val;
+    }
+}
 
 void neighbours(struct Graph* grph, struct Stack* stck, int vertex){
     for (int i = 0; i < grph->vertices; i++){

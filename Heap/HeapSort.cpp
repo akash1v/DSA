@@ -1,4 +1,4 @@
-#include"Heap.cpp"
+#include"MinHeap.cpp"
 template<typename t>
 void heapSort(t* array, int size){
     MinHeap<t> h(size);
