@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include"AdjointMatrix.c"
+#include"Graph.c"
 struct Queue{
     int* array;
     int no_of_values;

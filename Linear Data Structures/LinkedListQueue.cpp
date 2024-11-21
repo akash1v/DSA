@@ -1,7 +1,9 @@
 #include"LinkedList.cpp"
+
+template<typename t>
 class Queue{
 private:
-    LinkedList list;    
+    LinkedList<t> list;    
 public:
     void enqueue(int);
     int dequeue();
@@ -11,25 +13,32 @@ public:
     bool isEmpty();
 };
 
-void Queue::enqueue(int data){
+template<typename t>
+void Queue<t>::enqueue(int data){
     list.insert(data,list.length());
 };
 
-int Queue::dequeue(){
+template<typename t>
+int Queue<t>::dequeue(){
     return list.remove(0);
 };
 
-int Queue::peek(){
+template<typename t>
+int Queue<t>::peek(){
     return list.at(0);
 };
 
-void Queue::print(){
+template<typename t>
+void Queue<t>::print(){
     list.print();
 }
-int Queue::len(){
+
+template<typename t>
+int Queue<t>::len(){
     return list.length();
 }
 
-bool Queue::isEmpty(){
+template<typename t>
+bool Queue<t>::isEmpty(){
     return ! list.length();
 };

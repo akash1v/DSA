@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include"AdjointMatrix.c"
-
+#include"Graph.c"
 struct Stack{
     int* array;
     int top;
